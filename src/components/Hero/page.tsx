@@ -1,0 +1,749 @@
+"use client";
+
+import React, { useEffect, useRef, useState } from "react";
+
+/* ─────────────────────────────────────────────────────────────────
+   CARD DATA  (unchanged)
+───────────────────────────────────────────────────────────────── */
+interface CardData {
+  id: string;
+  name: string;
+  badge: string;
+  badgeBg: string;
+  badgeBorder: string;
+  badgeColor: string;
+  gradient: string;
+  textColor: string;
+  subTextColor: string;
+  validFor: string;
+  cardNo: string;
+  tagline: string;
+  description: string;
+  accentColor: string;
+  renderSlot: () => React.ReactNode;
+  renderOverlay?: () => React.ReactNode;
+}
+
+const CARDS: CardData[] = [
+  {
+    id: "mini",
+    name: "Mini",
+    badge: "MINI",
+    badgeBg: "rgba(44,44,42,0.10)",
+    badgeBorder: "0.5px solid rgba(44,44,42,0.22)",
+    badgeColor: "#2C2C2A",
+    gradient: "linear-gradient(135deg,#E8E6E1 0%,#D6D3CB 100%)",
+    textColor: "#2C2C2A",
+    subTextColor: "rgba(44,44,42,0.55)",
+    validFor: "18h 40m",
+    cardNo: "DLN-8842",
+    tagline: "Start your journey",
+    description: "Get instant access to 1 partner with a short-term pass.",
+    accentColor: "#4b4b4a",
+    renderSlot: () => (
+      <div className="text-right">
+        <i className="ti ti-bolt block text-lg mb-0.5" />
+        <p className="text-[10px] m-0 opacity-70">1 partner slot</p>
+      </div>
+    ),
+  },
+  {
+    id: "smart",
+    name: "Smart",
+    badge: "SMART",
+    badgeBg: "rgba(255,255,255,0.16)",
+    badgeBorder: "0.5px solid rgba(255,255,255,0.30)",
+    badgeColor: "#fff",
+    gradient: "linear-gradient(135deg,#C0102E 0%,#8A0C22 55%,#5E0716 100%)",
+    textColor: "#fff",
+    subTextColor: "rgba(255,255,255,0.60)",
+    validFor: "6d 04h",
+    cardNo: "DLN-8842",
+    tagline: "Built for regulars",
+    description: "Unlock 3 curated partner slots over 6 days.",
+    accentColor: "#C0102E",
+    renderOverlay: () => (
+      <div
+        className="absolute -top-10 -right-8 w-[180px] h-[180px] rounded-full"
+        style={{ background: "radial-gradient(circle,rgba(255,255,255,0.18) 0%,transparent 65%)" }}
+      />
+    ),
+    renderSlot: () => (
+      <div className="text-right">
+        <div className="flex gap-[5px] justify-end mb-[5px]">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className="w-[13px] h-[13px] rounded-full inline-block"
+              style={{
+                background: i === 0 ? "#F4C542" : "rgba(255,255,255,0.25)",
+                border: i > 0 ? "0.5px solid rgba(255,255,255,0.4)" : "none",
+              }}
+            />
+          ))}
+        </div>
+        <p className="text-[10px] m-0" style={{ color: "rgba(255,255,255,0.8)" }}>
+          1 of 3 partners
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    badge: "PRO",
+    badgeBg: "rgba(255,255,255,0.16)",
+    badgeBorder: "0.5px solid rgba(255,255,255,0.30)",
+    badgeColor: "#fff",
+    gradient: "linear-gradient(135deg,#8A0C22 0%,#5E0716 55%,#3A040D 100%)",
+    textColor: "#fff",
+    subTextColor: "rgba(255,255,255,0.60)",
+    validFor: "13d 02h",
+    cardNo: "DLN-8842",
+    tagline: "For the power user",
+    description: "Access up to 10 partner slots over 13 days.",
+    accentColor: "#8A0C22",
+    renderOverlay: () => (
+      <div
+        className="absolute -top-10 -right-8 w-[180px] h-[180px] rounded-full"
+        style={{ background: "radial-gradient(circle,rgba(255,255,255,0.14) 0%,transparent 65%)" }}
+      />
+    ),
+    renderSlot: () => (
+      <div className="text-right">
+        <div className="flex gap-1 justify-end mb-1">
+          {[true, false].map((filled, si) => (
+            <svg key={si} width="28" height="28" viewBox="-24 -24 48 48">
+              <path d="M 0 0 L -5 -6.88 L 0 -22 L 5 -6.88 Z" fill={filled ? "#F4C542" : "none"} stroke={!filled ? "rgba(255,255,255,0.4)" : "none"} strokeWidth="0.75" />
+              <path d="M 0 0 L 5 -6.88 L 20.92 -6.8 L 8.08 2.63 Z" fill={filled ? "#F4C542" : "none"} stroke={!filled ? "rgba(255,255,255,0.4)" : "none"} strokeWidth="0.75" />
+              <path d="M 0 0 L 8.08 2.63 L 12.93 17.8 L 0 8.5 Z" fill={filled ? "#F4C542" : "none"} stroke={!filled ? "rgba(255,255,255,0.4)" : "none"} strokeWidth="0.75" />
+              <path d="M 0 0 L 0 8.5 L -12.93 17.8 L -8.08 2.63 Z" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.75" />
+              <path d="M 0 0 L -8.08 2.63 L -20.92 -6.8 L -5 -6.88 Z" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.75" />
+            </svg>
+          ))}
+        </div>
+        <p className="text-[10px] m-0" style={{ color: "rgba(255,255,255,0.8)" }}>
+          3 of 10 partners
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "elite",
+    name: "Elite",
+    badge: "ELITE",
+    badgeBg: "rgba(244,197,66,0.15)",
+    badgeBorder: "0.5px solid rgba(244,197,66,0.5)",
+    badgeColor: "#F4C542",
+    gradient: "linear-gradient(135deg,#2C2C2A 0%,#141412 70%)",
+    textColor: "#fff",
+    subTextColor: "rgba(255,255,255,0.50)",
+    validFor: "28d 11h",
+    cardNo: "DLN-8842",
+    tagline: "No limits. All access.",
+    description: "Unlimited partner access for 28 days.",
+    accentColor: "#F4C542",
+    renderOverlay: () => (
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: "linear-gradient(90deg,transparent,#F4C542,transparent)" }}
+      />
+    ),
+    renderSlot: () => (
+      <div className="text-right">
+        <div
+          className="w-8 h-8 rounded-full flex items-center justify-center ml-auto mb-1"
+          style={{ border: "1px solid #F4C542" }}
+        >
+          <i className="ti ti-infinity text-base" style={{ color: "#F4C542" }} />
+        </div>
+        <p className="text-[10px] m-0" style={{ color: "rgba(255,255,255,0.8)" }}>
+          All partners
+        </p>
+      </div>
+    ),
+  },
+];
+
+/* ─────────────────────────────────────────────────────────────────
+   BREAKPOINT HELPERS
+   Returns multipliers for spread / rotation / z-depth depending on
+   the current viewport width so every breakpoint feels natural.
+───────────────────────────────────────────────────────────────── */
+interface BreakpointConfig {
+  spreadMul: number;   // multiplier on cardW * 0.9 for horizontal spread
+  rotYMul: number;     // multiplier on base rotateY (14 deg)
+  rotZMul: number;     // multiplier on base rotateZ (4 deg)
+  zDepthMul: number;   // multiplier on translateZ depths
+  perspective: number; // px — tighter on mobile for less dramatic depth
+  isMobile: boolean;   // true when < 576 px
+  isTablet: boolean;   // true when 576–991 px
+}
+
+function getBreakpoint(vw: number): BreakpointConfig {
+  if (vw >= 1440) {
+    // ≥ 1440 Desktop / 4 K — full drama
+    return { spreadMul: 1.0, rotYMul: 1.0, rotZMul: 1.0, zDepthMul: 1.0, perspective: 1800, isMobile: false, isTablet: false };
+  }
+  if (vw >= 1200) {
+    // 1200–1439 Laptop — slightly tighter
+    return { spreadMul: 0.92, rotYMul: 0.92, rotZMul: 0.92, zDepthMul: 0.92, perspective: 1600, isMobile: false, isTablet: false };
+  }
+  if (vw >= 992) {
+    // 992–1199 Small laptop
+    return { spreadMul: 0.82, rotYMul: 0.85, rotZMul: 0.85, zDepthMul: 0.85, perspective: 1400, isMobile: false, isTablet: false };
+  }
+  if (vw >= 768) {
+    // 768–991 Tablet — reduce spread & rotation
+    return { spreadMul: 0.70, rotYMul: 0.70, rotZMul: 0.70, zDepthMul: 0.70, perspective: 1200, isMobile: false, isTablet: true };
+  }
+  if (vw >= 576) {
+    // 576–767 Large mobile — compact spread
+    return { spreadMul: 0.55, rotYMul: 0.55, rotZMul: 0.55, zDepthMul: 0.50, perspective: 900, isMobile: true, isTablet: false };
+  }
+  // < 576 Small mobile — minimal depth, slight stagger only
+  return { spreadMul: 0.45, rotYMul: 0.40, rotZMul: 0.40, zDepthMul: 0.35, perspective: 700, isMobile: true, isTablet: false };
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   MEMBER CARD
+   All positioning is relative to phoneW — never to the viewport.
+   spread = cardW * 0.9 * spreadMul  (vs old: phoneW * 0.70)
+───────────────────────────────────────────────────────────────── */
+function MemberCard({
+  card,
+  offset,
+  isActive,
+  onSelect,
+  phoneW,
+  bp,
+}: {
+  card: CardData;
+  offset: number;
+  isActive: boolean;
+  onSelect: () => void;
+  phoneW: number;
+  bp: BreakpointConfig;
+}) {
+  const absOffset = Math.abs(offset);
+
+  // ── Card dimensions — tied to phone width
+  const cardW = phoneW * 0.9;
+
+  // ── Spread: cards fan out relative to CARD width, not viewport
+  //    This keeps everything proportional when phoneW changes.
+  const spread = cardW * 1.1 * bp.spreadMul;
+  const translateX = offset * spread;
+
+  // ── Z depth based on phoneW so perspective scale is consistent
+  const baseZ = phoneW * 0.16;
+  const translateZ = isActive
+    ? baseZ * bp.zDepthMul
+    : -absOffset * baseZ * 0.5 * bp.zDepthMul;
+
+  // ── Rotation — reduced on tablet/mobile via multiplier
+  const rotateY = offset * -14 * bp.rotYMul;
+  const rotateZ = offset * 4 * bp.rotZMul;
+
+  // ── Scale & opacity fade
+  const scale = isActive ? 1 : Math.max(0.6, 1 - absOffset * .10);
+  const opacity = absOffset > 2 ? 0 : 1 - absOffset * 0.3;
+
+  return (
+    <div
+      onClick={onSelect}
+      style={{
+        /* ── Position relative to Stage centre (Stage is the context) ── */
+        position: "absolute",
+        left: "50%",
+        top: "45%",
+        width: cardW,
+        /* Centre the card on its own axis then fan out via transform */
+        marginLeft: -cardW / 2,
+        marginTop: -(cardW / 1.586) * 0.5, // half card height (aspect 1.586)
+
+        cursor: isActive ? "default" : "pointer",
+        transition: "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
+        opacity,
+        zIndex: isActive ? 10 : 10 - absOffset,
+        pointerEvents: absOffset > 2 ? "none" : "auto",
+      }}
+    >
+      {/* ── Card face ── */}
+      <div
+        className="w-full relative overflow-hidden flex flex-col justify-between"
+        style={{
+          aspectRatio: "1.586",
+          borderRadius: "5%",
+          padding: "6% 7%",
+          boxSizing: "border-box",
+          background: card.gradient,
+          color: card.textColor,
+          border: card.id === "elite" ? "0.5px solid rgba(244,197,66,0.4)" : "none",
+          /* Reduce shadow weight on mobile for perf + visual cleanliness */
+          boxShadow: isActive
+            ? bp.isMobile
+              ? "0 20px 50px rgba(0,0,0,0.28)"
+              : "0 35px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.15)"
+            : bp.isMobile
+              ? "0 8px 20px rgba(0,0,0,0.12)"
+              : "0 15px 35px rgba(0,0,0,0.15)",
+        }}
+      >
+        {card.renderOverlay?.()}
+        {card.id === "elite" && (
+          <div
+            className="absolute top-0 left-0 right-0 h-px"
+            style={{ background: "linear-gradient(90deg,transparent,#F4C542,transparent)" }}
+          />
+        )}
+
+        {/* Top row: brand + badge */}
+        <div className="flex justify-between items-start relative">
+          <span className="font-semibold" style={{ fontSize: "clamp(11px, 1.1vw, 18px)" }}>
+            dealona
+          </span>
+          <span
+            className="font-semibold rounded-full"
+            style={{
+              fontSize: "clamp(7px, 0.65vw, 11px)",
+              letterSpacing: "0.8px",
+              background: card.badgeBg,
+              border: card.badgeBorder,
+              color: card.badgeColor,
+              padding: "3px 10px",
+            }}
+          >
+            {card.badge}
+          </span>
+        </div>
+
+        {/* Member name */}
+        <div className="relative">
+          <p
+            className="m-0 uppercase"
+            style={{ fontSize: "clamp(6px, 0.5vw, 10px)", letterSpacing: 1, color: card.subTextColor }}
+          >
+            Member
+          </p>
+          <p className="font-semibold mt-0.5 m-0" style={{ fontSize: "clamp(12px, 1vw, 21px)" }}>
+            Ali Khan
+          </p>
+        </div>
+
+        {/* Bottom row: validity + slot */}
+        <div className="flex justify-between items-end relative">
+          <div>
+            <p
+              className="m-0 uppercase"
+              style={{ fontSize: "clamp(6px, 0.5vw, 10px)", letterSpacing: 1, color: card.subTextColor }}
+            >
+              Valid for
+            </p>
+            <p className="font-semibold mt-0.5 m-0" style={{ fontSize: "clamp(10px, 0.85vw, 17px)" }}>
+              {card.validFor}
+            </p>
+          </div>
+          {card.renderSlot()}
+        </div>
+
+        {/* Card number watermark */}
+        <span
+          className="absolute"
+          style={{
+            bottom: "5%",
+            left: "7%",
+            fontSize: "clamp(6px, 0.45vw, 9.5px)",
+            letterSpacing: 1,
+            color: card.subTextColor,
+          }}
+        >
+          {card.cardNo}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   HERO  (main export)
+───────────────────────────────────────────────────────────────── */
+export default function Hero() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const totalSteps = CARDS.length;
+
+  /* ── Swipe / drag state (unchanged logic) ── */
+  const touchStartX = useRef<number | null>(null);
+  const isDragging = useRef<boolean>(false);
+  const dragStartX = useRef<number>(0);
+
+  const prevCard = () => setActiveIndex((p) => Math.max(0, p - 1));
+  const nextCard = () => setActiveIndex((p) => Math.min(totalSteps - 1, p + 1));
+
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (dx > 45) prevCard();
+    else if (dx < -45) nextCard();
+    touchStartX.current = null;
+  };
+  const handleMouseDown = (e: React.MouseEvent) => { isDragging.current = true; dragStartX.current = e.clientX; };
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current) return;
+    const dx = e.clientX - dragStartX.current;
+    if (dx > 60) { prevCard(); isDragging.current = false; }
+    else if (dx < -60) { nextCard(); isDragging.current = false; }
+  };
+  const handleMouseUp = () => { isDragging.current = false; };
+
+  const activeCard = CARDS[activeIndex];
+
+  /* ─────────────────────────────────────────────────────────────
+     PHONE WIDTH  — uses BOTH viewport width and height so the
+     phone never overflows vertically on landscape or short monitors.
+     Formula: min(vw*0.24, vh*0.58, 430)  with 220 floor.
+     This replaces the old "window.innerWidth * 0.26" which broke
+     on wide-short monitors (laptops) and ultra-wides.
+  ───────────────────────────────────────────────────────────── */
+  const [phoneW, setPhoneW] = useState(300); // SSR-safe default
+  const [bp, setBp] = useState<BreakpointConfig>(() => getBreakpoint(1200));
+
+  useEffect(() => {
+    const update = () => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const w = Math.max(220, Math.min(vw * 0.24, vh * 0.58, 430));
+      setPhoneW(w);
+      setBp(getBreakpoint(vw));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  /* ─────────────────────────────────────────────────────────────
+     STAGE HEIGHT
+     Stage must be tall enough to show the phone + the cards that
+     fan around it.  We derive it from phoneW so it scales together.
+     Desktop:  phoneH ≈ phoneW / 0.46  (phone aspect ~2.17)
+     We add card overflow headroom: stage ≈ phoneH * 1.15
+     Minimum 340 px so mobile never collapses.
+  ───────────────────────────────────────────────────────────── */
+  const phoneH = phoneW / 0.530; // ~1.88× phoneW gives the actual pixel height
+  const stageH = Math.max(340, phoneH * (bp.isMobile ? 1.05 : 1.12));
+
+  return (
+    <>
+      {/* ── Static styles: keyframes + phone CSS that rely on clamp(). ── */}
+      <style>{`
+        @keyframes heroFadeUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        /* Re-triggered whenever activeCard.id changes (via key prop) */
+        .hero-title { animation: heroFadeUp 0.4s ease both; }
+
+        /* ── Phone frame: sized from phoneW JS variable via CSS custom props ──
+           We set --phone-w on the phone-wrap element in JSX so these classes
+           just consume it — zero magic numbers here.                        */
+        .hero-phone-frame {
+          width:         var(--phone-w);
+          height:        calc(var(--phone-w) / 0.530);
+          border-radius: calc(var(--phone-w) * 0.12);
+          padding:       calc(var(--phone-w) * 0.025);
+          background:    linear-gradient(145deg,#b0b0b5,#e8e8ed 30%,#c2c2c7 55%,#ffffff,#8e8e93);
+          box-shadow:
+            inset 0 2px 4px rgba(255,255,255,.8),
+            inset 0 -3px 6px rgba(0,0,0,.4),
+            0 calc(var(--phone-w) * 0.09) calc(var(--phone-w) * 0.18) rgba(0,0,0,0.22);
+          position: relative;
+          filter: drop-shadow(0 calc(var(--phone-w)*0.07) calc(var(--phone-w)*0.13) rgba(0,0,0,0.28));
+        }
+        .hero-phone-screen {
+          width: 100%; height: 96%;
+          border-radius: calc(var(--phone-w) * 0.10);
+          overflow: hidden;
+          background: #0c0c0e;
+          border: calc(max(3px, var(--phone-w) * 0.012)) solid #141417;
+          position: relative;
+          display: flex; flex-direction: column; justify-content: space-between;
+          padding: calc(var(--phone-w) * 0.14) calc(var(--phone-w) * 0.06) calc(var(--phone-w) * 0.045);
+        }
+        .hero-island {
+          position: absolute;
+          top: calc(var(--phone-w) * 0.04);
+          left: 50%; transform: translateX(-50%);
+          width: calc(var(--phone-w) * 0.30);
+          height: calc(var(--phone-w) * 0.055);
+          background: #000; border-radius: 30px; z-index: 5;
+          box-shadow: inset 0 1px 2px rgba(255,255,255,.15);
+        }
+        /* Hardware buttons — all derived from phone width */
+        .hero-btn-r  { position:absolute; right:calc(var(--phone-w)*-0.011); top:20%; width:calc(var(--phone-w)*0.011); height:8%;   background:#a0a0a5; border-radius:0 3px 3px 0; }
+        .hero-btn-l1 { position:absolute; left:calc(var(--phone-w)*-0.011);  top:16%; width:calc(var(--phone-w)*0.011); height:5.5%; background:#a0a0a5; border-radius:3px 0 0 3px; }
+        .hero-btn-l2 { position:absolute; left:calc(var(--phone-w)*-0.011);  top:25%; width:calc(var(--phone-w)*0.011); height:5.5%; background:#a0a0a5; border-radius:3px 0 0 3px; }
+        .hero-btn-l3 { position:absolute; left:calc(var(--phone-w)*-0.011);  top:34%; width:calc(var(--phone-w)*0.011); height:5.5%; background:#a0a0a5; border-radius:3px 0 0 3px; }
+      `}</style>
+
+      {/* ══════════════════════════════════════════════════════════
+          HERO SECTION
+          min-h-screen so it fills the viewport.
+          flex-col keeps Header → Stage → (mobile controls) stacked.
+          overflow-x hidden prevents cards from causing horizontal scroll.
+      ═══════════════════════════════════════════════════════════ */}
+      <section
+        className="relative flex flex-col items-center justify-center overflow-x-hidden select-none"
+        style={{
+          minHeight: "100svh", // svh = small viewport height — better on mobile browsers
+          paddingTop: "calc(56px + 3vh)",
+          paddingBottom: bp.isMobile ? "2vh" : "4vh",
+          background: "radial-gradient(circle at 50% 50%, #ffffff 0%, #f4f4f7 65%, #eaeaef 100%)",
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
+
+        {/* ── HEADER ───────────────────────────────────────────── */}
+        <header
+          className="text-center gap-4 flex flex-col items-center justify-center relative z-[5] w-full"
+          style={{
+            paddingLeft: "clamp(16px, 4vw, 64px)",
+            paddingRight: "clamp(16px, 4vw, 64px)",
+            marginBottom: bp.isMobile ? "clamp(8px, 2vh, 16px)" : "clamp(12px, 1vh, 28px)",
+          }}
+        >
+          <p
+            className="font-bold uppercase text-gray-500 m-0"
+            style={{ fontSize: "clamp(12px, 0.99vw, 12px)", letterSpacing: "3px" }}
+          >
+            Dealona Membership
+          </p>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h1
+              key={activeCard.id}         // key triggers heroFadeUp on card switch
+              className="hero-title font-extrabold text-gray-900 m-0"
+              style={{
+                fontSize: bp.isMobile ? "clamp(1.8rem, 6vw, 1.9rem)" : "clamp(1.6rem, 3.2vw, 2.8rem)",
+                letterSpacing: "-0.03em",
+                lineHeight: 1.1,
+              }}
+            >
+              {activeCard.tagline}
+            </h1>
+            <p
+              className="text-gray-600 mx-auto mb-0  mt-1"
+              style={{
+                fontSize: bp.isMobile ? "clamp(12px, 3.5vw, 15px)" : "clamp(13px, 1vw, 16px)",
+                maxWidth: bp.isMobile ? "90%" : "clamp(260px, 34vw, 460px)",
+              }}
+            >
+              {activeCard.description}
+            </p>
+          </div>
+        </header>
+
+        {/* ══════════════════════════════════════════════════════════
+            STAGE
+            This is the ONLY positioning context.
+            - Phone, cards, glow are all absolute inside here.
+            - Stage width: full width, capped so ultra-wides don't
+              explode. Max-width matches the widest card spread.
+            - Stage height: derived from phoneH so it always fits
+              without hard-coded pixel hacks.
+        ═══════════════════════════════════════════════════════════ */}
+        <div
+          className="relative flex items-center justify-center shrink-0 w-full mx-auto"
+          style={{
+            height: stageH,
+            maxWidth: "min(100%, 1400px)", // cap ultra-wide
+            perspective: `${bp.perspective}px`,
+            perspectiveOrigin: "50% 50%",
+          }}
+        >
+          {/* ── AMBIENT GLOW ─────────────────────────────────────
+              Sized relative to phoneW so it always halos the phone.
+              Positioned at stage centre via left/top 50% + transform.
+          ──────────────────────────────────────────────────────── */}
+          <div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: phoneW * 2.2,
+              height: phoneW * 2.2,
+              background: `radial-gradient(circle, ${activeCard.accentColor}22 0%, transparent 70%)`,
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              transition: "background 0.7s ease",
+              filter: `blur(${phoneW * 0.18}px)`,
+              zIndex: 0,
+            }}
+          />
+
+          {/* ── PHONE MOCKUP ─────────────────────────────────────
+              --phone-w CSS variable drives all phone-related sizes
+              in the <style> block above — zero duplication.
+              Centred in Stage via left/top 50% + translate(-50%,-50%).
+          ──────────────────────────────────────────────────────── */}
+          <div
+            className="absolute z-[2] pointer-events-none"
+            style={{
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              /* Inject phoneW as CSS custom property for child classes */
+              ["--phone-w" as string]: `${phoneW}px`,
+            }}
+          >
+            <div className="hero-phone-frame">
+              <div className="hero-phone-screen">
+                {/* Screen accent glow */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: `radial-gradient(circle at 50% 40%, ${activeCard.accentColor}35 0%, transparent 70%)`,
+                    transition: "background 0.6s ease",
+                  }}
+                />
+                <div className="hero-island" />
+
+                {/* App header row */}
+                <div className="flex justify-between items-center z-[3] opacity-60">
+                  <span
+                    className="text-white font-semibold uppercase"
+                    style={{ fontSize: `${phoneW * 0.038}px`, letterSpacing: "0.08em" }}
+                  >
+                    Deloona Pass
+                  </span>
+                  <span
+                    className="rounded-full"
+                    style={{
+                      width: `${phoneW * 0.028}px`,
+                      height: `${phoneW * 0.028}px`,
+                      background: activeCard.accentColor,
+                      boxShadow: `0 0 8px ${activeCard.accentColor}`,
+                    }}
+                  />
+                </div>
+
+                {/* Selected plan badge */}
+                <div
+                  className="text-center z-[3] backdrop-blur-md border border-white/10"
+                  style={{
+                    background: "rgba(255,255,255,0.06)",
+                    borderRadius: `${phoneW * 0.045}px`,
+                    padding: `${phoneW * 0.038}px ${phoneW * 0.05}px`,
+                  }}
+                >
+                  <p
+                    className="m-0 uppercase"
+                    style={{
+                      fontSize: `${phoneW * 0.032}px`,
+                      color: "rgba(255,255,255,0.45)",
+                      letterSpacing: "0.12em",
+                    }}
+                  >
+                    Selected Plan
+                  </p>
+                  <p
+                    className="font-bold text-white m-0 mt-[3px]"
+                    style={{ fontSize: `${phoneW * 0.056}px` }}
+                  >
+                    {activeCard.name} Tier
+                  </p>
+                </div>
+
+                {/* Glass specular shine */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.08) 0%,transparent 45%)" }}
+                />
+              </div>
+
+              {/* Hardware side buttons */}
+              <div className="hero-btn-r" />
+              <div className="hero-btn-l1" />
+              <div className="hero-btn-l2" />
+              <div className="hero-btn-l3" />
+            </div>
+          </div>
+
+          {/* ── FLOATING MEMBERSHIP CARDS ────────────────────────
+              Each card receives phoneW and bp so it self-positions
+              proportionally. Nothing here is viewport-relative.
+          ──────────────────────────────────────────────────────── */}
+          {CARDS.map((card, i) => (
+            <MemberCard
+              key={card.id}
+              card={card}
+              offset={i - activeIndex}
+              isActive={i === activeIndex}
+              onSelect={() => setActiveIndex(i)}
+              phoneW={phoneW}
+              bp={bp}
+            />
+          ))}
+
+          {/* ── INDICATOR DOTS ────────────────────────────────────
+              Pinned to the bottom of the Stage so they always sit
+              below the cards regardless of Stage height.
+          ──────────────────────────────────────────────────────── */}
+          <div
+            className="absolute flex gap-[7px] justify-center z-[15]"
+            style={{ bottom: bp.isMobile ? 10 : 16, left: 0, right: 0 }}
+          >
+            {CARDS.map((c, i) => (
+              <span
+                key={c.id}
+                onClick={() => setActiveIndex(i)}
+                className="block rounded-full cursor-pointer"
+                style={{
+                  width: i === activeIndex ? (bp.isMobile ? 20 : "clamp(18px, 1.8vw, 30px)") : (bp.isMobile ? 7 : "clamp(6px, 0.55vw, 8px)"),
+                  height: bp.isMobile ? 7 : "clamp(6px, 0.55vw, 8px)",
+                  background: i === activeIndex
+                    ? c.id === "mini" ? "#111827" : c.accentColor
+                    : "rgba(0,0,0,0.15)",
+                  transition: "width 0.35s ease, background 0.35s ease",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ── MOBILE ARROW CONTROLS ─────────────────────────────────
+            On small screens the fan spread is tight and swipe can be
+            hard to discover. Show prev / next arrows below the stage
+            so users have a clear affordance. Hidden on desktop.
+        ──────────────────────────────────────────────────────────── */}
+        {bp.isMobile && (
+          <div className="flex items-center gap-6 mt-3 z-[5]">
+            <button
+              onClick={prevCard}
+              disabled={activeIndex === 0}
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 disabled:opacity-30 transition-opacity"
+              aria-label="Previous card"
+            >
+              <i className="ti ti-chevron-left text-gray-700 text-lg" />
+            </button>
+            <span className="text-xs text-gray-400 font-medium tracking-widest">
+              {activeIndex + 1} / {totalSteps}
+            </span>
+            <button
+              onClick={nextCard}
+              disabled={activeIndex === totalSteps - 1}
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 disabled:opacity-30 transition-opacity"
+              aria-label="Next card"
+            >
+              <i className="ti ti-chevron-right text-gray-700 text-lg" />
+            </button>
+          </div>
+        )}
+      </section>
+    </>
+  );
+}
