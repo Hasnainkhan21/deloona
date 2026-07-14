@@ -227,8 +227,8 @@ function MemberCard({
 }) {
   const absOffset = Math.abs(offset);
 
-  // ── Card dimensions — tied to phone width
-  const cardW = phoneW * 0.9;
+  // ── Card dimensions — tied to phone width so it fits cleanly inside phone screen
+  const cardW = phoneW * 0.86;
 
   // ── Spread: cards fan out relative to CARD width, not viewport
   //    This keeps everything proportional when phoneW changes.
@@ -238,7 +238,7 @@ function MemberCard({
   // ── Z depth based on phoneW so perspective scale is consistent
   const baseZ = phoneW * 0.16;
   const translateZ = isActive
-    ? baseZ * bp.zDepthMul
+    ? 2 // Keep active card flat inside phone screen without perspective magnification
     : -absOffset * baseZ * 0.5 * bp.zDepthMul;
 
   // ── Rotation — reduced on tablet/mobile via multiplier
@@ -256,7 +256,7 @@ function MemberCard({
         /* ── Position relative to Stage centre (Stage is the context) ── */
         position: "absolute",
         left: "50%",
-        top: "45%",
+        top: "50%",
         width: cardW,
         /* Centre the card on its own axis then fan out via transform */
         marginLeft: -cardW / 2,
@@ -398,6 +398,19 @@ export default function Hero() {
   };
   const handleMouseUp = () => { isDragging.current = false; };
 
+  /* ── Horizontal wheel / touchpad scrolling ── */
+  const wheelLock = useRef<boolean>(false);
+  const handleWheel = (e: React.WheelEvent) => {
+    // Check if scrolling horizontally (or horizontal touchpad gesture)
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 10) {
+      if (wheelLock.current) return;
+      if (e.deltaX > 0) nextCard();
+      else prevCard();
+      wheelLock.current = true;
+      setTimeout(() => { wheelLock.current = false; }, 350); // debounce scroll step
+    }
+  };
+
   const activeCard = CARDS[activeIndex];
 
   /* ─────────────────────────────────────────────────────────────
@@ -414,7 +427,7 @@ export default function Hero() {
     const update = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const w = Math.max(220, Math.min(vw * 0.24, vh * 0.58, 430));
+      const w = Math.max(210, Math.min(vw * 0.23, vh * 0.36, 380));
       setPhoneW(w);
       setBp(getBreakpoint(vw));
     };
@@ -431,7 +444,7 @@ export default function Hero() {
      We add card overflow headroom: stage ≈ phoneH * 1.15
      Minimum 340 px so mobile never collapses.
   ───────────────────────────────────────────────────────────── */
-  const phoneH = phoneW / 0.530; // ~1.88× phoneW gives the actual pixel height
+  const phoneH = phoneW * 2; // ~2.0× phoneW (aspect-[1/2]) gives the actual pixel height
   const stageH = Math.max(340, phoneH * (bp.isMobile ? 1.05 : 1.12));
 
   return (
@@ -445,46 +458,7 @@ export default function Hero() {
         /* Re-triggered whenever activeCard.id changes (via key prop) */
         .hero-title { animation: heroFadeUp 0.4s ease both; }
 
-        /* ── Phone frame: sized from phoneW JS variable via CSS custom props ──
-           We set --phone-w on the phone-wrap element in JSX so these classes
-           just consume it — zero magic numbers here.                        */
-        .hero-phone-frame {
-          width:         var(--phone-w);
-          height:        calc(var(--phone-w) / 0.530);
-          border-radius: calc(var(--phone-w) * 0.12);
-          padding:       calc(var(--phone-w) * 0.025);
-          background:    linear-gradient(145deg,#b0b0b5,#e8e8ed 30%,#c2c2c7 55%,#ffffff,#8e8e93);
-          box-shadow:
-            inset 0 2px 4px rgba(255,255,255,.8),
-            inset 0 -3px 6px rgba(0,0,0,.4),
-            0 calc(var(--phone-w) * 0.09) calc(var(--phone-w) * 0.18) rgba(0,0,0,0.22);
-          position: relative;
-          filter: drop-shadow(0 calc(var(--phone-w)*0.07) calc(var(--phone-w)*0.13) rgba(0,0,0,0.28));
-        }
-        .hero-phone-screen {
-          width: 100%; height: 96%;
-          border-radius: calc(var(--phone-w) * 0.10);
-          overflow: hidden;
-          background: #0c0c0e;
-          border: calc(max(3px, var(--phone-w) * 0.012)) solid #141417;
-          position: relative;
-          display: flex; flex-direction: column; justify-content: space-between;
-          padding: calc(var(--phone-w) * 0.14) calc(var(--phone-w) * 0.06) calc(var(--phone-w) * 0.045);
-        }
-        .hero-island {
-          position: absolute;
-          top: calc(var(--phone-w) * 0.04);
-          left: 50%; transform: translateX(-50%);
-          width: calc(var(--phone-w) * 0.30);
-          height: calc(var(--phone-w) * 0.055);
-          background: #000; border-radius: 30px; z-index: 5;
-          box-shadow: inset 0 1px 2px rgba(255,255,255,.15);
-        }
-        /* Hardware buttons — all derived from phone width */
-        .hero-btn-r  { position:absolute; right:calc(var(--phone-w)*-0.011); top:20%; width:calc(var(--phone-w)*0.011); height:8%;   background:#a0a0a5; border-radius:0 3px 3px 0; }
-        .hero-btn-l1 { position:absolute; left:calc(var(--phone-w)*-0.011);  top:16%; width:calc(var(--phone-w)*0.011); height:5.5%; background:#a0a0a5; border-radius:3px 0 0 3px; }
-        .hero-btn-l2 { position:absolute; left:calc(var(--phone-w)*-0.011);  top:25%; width:calc(var(--phone-w)*0.011); height:5.5%; background:#a0a0a5; border-radius:3px 0 0 3px; }
-        .hero-btn-l3 { position:absolute; left:calc(var(--phone-w)*-0.011);  top:34%; width:calc(var(--phone-w)*0.011); height:5.5%; background:#a0a0a5; border-radius:3px 0 0 3px; }
+
       `}</style>
 
       {/* ══════════════════════════════════════════════════════════
@@ -494,24 +468,20 @@ export default function Hero() {
           overflow-x hidden prevents cards from causing horizontal scroll.
       ═══════════════════════════════════════════════════════════ */}
       <section
-        className="relative flex flex-col items-center justify-center overflow-x-hidden select-none"
-        style={{
-          minHeight: "100svh", // svh = small viewport height — better on mobile browsers
-          paddingTop: "calc(56px + 3vh)",
-          paddingBottom: bp.isMobile ? "2vh" : "4vh",
-          background: "radial-gradient(circle at 50% 50%, #ffffff 0%, #f4f4f7 65%, #eaeaef 100%)",
-        }}
+        className="relative flex flex-col items-center overflow-x-hidden select-none min-h-svh pb-6 bg-[radial-gradient(circle_at_50%_50%,#ffffff_0%,#f4f4f7_65%,#eaeaef_100%)]"
+        style={{ paddingTop: bp.isMobile ? "88px" : "108px" }}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onWheel={handleWheel}
       >
 
         {/* ── HEADER ───────────────────────────────────────────── */}
         <header
-          className="text-center gap-4 flex flex-col items-center justify-center relative z-[5] w-full"
+          className="shrink-0 text-center gap-4 flex flex-col items-center justify-center relative z-[5] w-full"
           style={{
             paddingLeft: "clamp(16px, 4vw, 64px)",
             paddingRight: "clamp(16px, 4vw, 64px)",
@@ -596,80 +566,51 @@ export default function Hero() {
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
+              width: `${phoneW}px`,
               /* Inject phoneW as CSS custom property for child classes */
               ["--phone-w" as string]: `${phoneW}px`,
             }}
           >
-            <div className="hero-phone-frame">
-              <div className="hero-phone-screen">
-                {/* Screen accent glow */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at 50% 40%, ${activeCard.accentColor}35 0%, transparent 70%)`,
-                    transition: "background 0.6s ease",
-                  }}
-                />
-                <div className="hero-island" />
+            <div className="relative w-full aspect-[1/2] rounded-[1.5rem] md:rounded-[1.9rem] min-[1800px]:rounded-[3.5rem] border-4 border-zinc-600 p-3 md:p-4 shadow-2xl bg-gradient-to-br from-zinc-700 via-zinc-900 to-zinc-800">
+              {/* Screen */}
+              <div className="relative h-full w-full overflow-hidden rounded-[22px] md:rounded-[1.5rem] min-[1800px]:rounded-[3rem] bg-white border border-neutral-200 shadow-inner">
+                {/* Status Bar & Dynamic Island (Inline & Responsive using Tailwind Utilities) */}
+                <div className="absolute top-3 left-0 z-20 flex w-full items-center justify-between px-5 h-7 font-medium text-black text-xs md:text-sm select-none">
+                  {/* Left: Time */}
+                  <div className="z-10 w-[50px] flex items-center justify-center   font-semibold  tracking-tight">9:41</div>
 
-                {/* App header row */}
-                <div className="flex justify-between items-center z-[3] opacity-60">
-                  <span
-                    className="text-white font-semibold uppercase"
-                    style={{ fontSize: `${phoneW * 0.038}px`, letterSpacing: "0.08em" }}
-                  >
-                    Deloona Pass
-                  </span>
-                  <span
-                    className="rounded-full"
-                    style={{
-                      width: `${phoneW * 0.028}px`,
-                      height: `${phoneW * 0.028}px`,
-                      background: activeCard.accentColor,
-                      boxShadow: `0 0 8px ${activeCard.accentColor}`,
-                    }}
-                  />
+                  {/* Center: Dynamic Island (Inline) */}
+                  <div className="absolute left-1/2 -translate-x-1/2 rounded-full bg-black flex items-center justify-end shadow-sm w-20 md:w-22 h-6 md:h-6 pr-2.5">
+                    <div className="rounded-full bg-neutral-900 w-2.5 h-2.5"></div>
+                  </div>
+
+                  {/* Right: Signal / Wifi / Battery */}
+                  <div className="flex items-center gap-1 z-10">
+
+                    {/* Wifi */}
+                    <svg className="fill-current w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24">
+                      <path d="M12.01 21.49L23.64 7c-.45-.34-4.93-4-11.64-4C5.28 3 .81 6.66.36 7l11.63 14.49z" />
+                    </svg>
+                    {/* Battery */}
+                    <svg className="fill-current w-4 h-3 md:w-5 md:h-3.5" viewBox="0 0 24 24">
+                      <path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" />
+                    </svg>
+                  </div>
                 </div>
 
-                {/* Selected plan badge */}
-                <div
-                  className="text-center z-[3] backdrop-blur-md border border-white/10"
-                  style={{
-                    background: "rgba(255,255,255,0.06)",
-                    borderRadius: `${phoneW * 0.045}px`,
-                    padding: `${phoneW * 0.038}px ${phoneW * 0.05}px`,
-                  }}
-                >
-                  <p
-                    className="m-0 uppercase"
-                    style={{
-                      fontSize: `${phoneW * 0.032}px`,
-                      color: "rgba(255,255,255,0.45)",
-                      letterSpacing: "0.12em",
-                    }}
-                  >
-                    Selected Plan
-                  </p>
-                  <p
-                    className="font-bold text-white m-0 mt-[3px]"
-                    style={{ fontSize: `${phoneW * 0.056}px` }}
-                  >
-                    {activeCard.name} Tier
-                  </p>
+                {/* Content */}
+                <div className="relative z-10 flex h-full flex-col items-center justify-between pt-[29%] pb-[14%]">
                 </div>
 
-                {/* Glass specular shine */}
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.08) 0%,transparent 45%)" }}
-                />
+                {/* Home Indicator */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black w-24 md:w-32 h-1 md:h-1.5"></div>
               </div>
 
-              {/* Hardware side buttons */}
-              <div className="hero-btn-r" />
-              <div className="hero-btn-l1" />
-              <div className="hero-btn-l2" />
-              <div className="hero-btn-l3" />
+              {/* Hardware side buttons using pure Tailwind utilities */}
+              <div className="absolute -right-1 top-1/5 w-1 h-12 rounded-r-sm bg-gradient-to-r from-zinc-700 to-zinc-500" />
+              <div className="absolute -left-1 top-1/6 w-1 h-8 rounded-l-sm bg-gradient-to-l from-zinc-700 to-zinc-500" />
+              <div className="absolute -left-1 top-1/4 w-1 h-8 rounded-l-sm bg-gradient-to-l from-zinc-700 to-zinc-500" />
+              <div className="absolute -left-1 top-1/3 w-1 h-8 rounded-l-sm bg-gradient-to-l from-zinc-700 to-zinc-500" />
             </div>
           </div>
 
