@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar/page";
 import Hero from "@/components/Hero/page";
 import MembershipShowcase from "@/components/MembershipShowcase/page";
 import AppDownloadSection from "@/components/Appdownload/page";
+import InstaReels from "@/components/InstaReels/page";
 
 export default function Home() {
   return (
@@ -18,9 +19,11 @@ export default function Home() {
       <div id="showcase" className="full-bleed">
         <MembershipShowcase />
       </div>
+      <InstaReels />
       <div id="download">
         <AppDownloadSection />
       </div>
+
     </main>
   );
 }
