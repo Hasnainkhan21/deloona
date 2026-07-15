@@ -381,18 +381,6 @@ export function PhoneStage() {
         ))}
       </div>
 
-      {/* Mobile arrow controls */}
-      {bp.isMobile && (
-        <div className="absolute flex items-center gap-6 z-[15]" style={{ bottom: -48 }}>
-          <button onClick={prevCard} disabled={activeIndex === 0} className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 disabled:opacity-30 transition-opacity" aria-label="Previous card">
-            <i className="ti ti-chevron-left text-gray-700 text-lg" />
-          </button>
-          <span className="text-xs text-gray-400 font-medium tracking-widest">{activeIndex + 1} / {totalSteps}</span>
-          <button onClick={nextCard} disabled={activeIndex === totalSteps - 1} className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 disabled:opacity-30 transition-opacity" aria-label="Next card">
-            <i className="ti ti-chevron-right text-gray-700 text-lg" />
-          </button>
-        </div>
-      )}
     </div>
   );
 }
@@ -402,12 +390,15 @@ export function PhoneStage() {
 ───────────────────────────────────────────────────────────────── */
 export default function MembershipShowcase() {
   return (
-    <section className="relative flex flex-col items-center overflow-x-hidden select-none min-h-svh pb-12 pt-16 bg-[radial-gradient(circle_at_50%_50%,#ffffff_0%,#f4f4f7_65%,#eaeaef_100%)]">
+    <section
+      className="relative w-full flex flex-col items-center overflow-x-hidden select-none min-h-svh pb-12 pt-16 bg-[radial-gradient(circle_at_50%_50%,#ffffff_0%,#f4f4f7_65%,#eaeaef_100%)]"
+      style={{ paddingLeft: "5%", paddingRight: "5%" }}
+    >
       <style>{`
         @keyframes heroFadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
         .hero-title { animation: heroFadeUp 0.4s ease both; }
       `}</style>
-      <header className="shrink-0 text-center gap-3 flex flex-col items-center justify-center relative z-[5] w-full mb-4 px-4">
+      <header className="shrink-0 text-center gap-3 flex flex-col items-center justify-center relative z-[5] w-full mb-4">
         <p className="font-bold uppercase text-gray-500 m-0" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
         <h2 className="font-extrabold text-gray-900 m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
         <p className="text-gray-500 text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>

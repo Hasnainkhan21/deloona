@@ -19,16 +19,20 @@
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+  }
 }
 
 /* Hide scrollbar utility */
@@ -41,8 +45,46 @@ body {
   scrollbar-width: none;
 }
 
+/* Full Bleed utility: breaks a section out of the root 5% margin so its
+   background stretches edge-to-edge across the full viewport.
+   Each section inside controls its OWN horizontal padding. */
+.full-bleed {
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding: 0 !important;
+}
+
 .hero-root {
   /* retained for legacy - not the primary layout anymore */
+}
+
+/* AppDownload Section — explicit layout classes that bypass Tailwind arbitrary-value scanning */
+.download-section {
+  width: 100%;
+  padding-top: 64px;
+  padding-bottom: 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.download-card {
+  width: 100%;
+  background-color: #034ea2;
+  border-radius: 26px;
+  padding: 48px 50px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .download-card {
+    flex-direction: row;
+  }
 }
 
 /* Scene */

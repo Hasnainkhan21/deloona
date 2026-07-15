@@ -6,9 +6,12 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 z-50 w-full">
       <nav
-        className="flex items-center justify-between w-full px-6 md:px-12 transition-all duration-300"
+        className="flex items-center justify-between w-full transition-all duration-300"
         style={{
-          height: "80px", // <-- ADJUST NAVBAR HEIGHT HERE (e.g., "70px", "90px", "100px")
+          height: "80px",
+          paddingLeft: "clamp(24px, 6vw, 80px)",
+          paddingRight: "clamp(24px, 6vw, 80px)",
+          boxSizing: "border-box",
           background: "rgba(255, 255, 255, 0.45)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
@@ -39,12 +42,9 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Simple Inline Tailwind CTA Button */}
-        <button
-          type="button"
-          className="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-full px-6 py-2.5 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer select-none"
-        >
-          Get started
+        {/* CTA Button */}
+        <button className="bg-blue-400 hover:bg-blue-500 transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-white shadow-lg cursor-pointer select-none">
+          Get Started
         </button>
       </nav>
     </header>
