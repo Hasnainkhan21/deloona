@@ -300,7 +300,7 @@ export function PhoneStage() {
     const update = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const w = Math.max(210, Math.min(vw * 0.23, vh * 0.36, 380));
+      const w = Math.max(340, Math.min(vw * 0.36, vh * 0.55, 520));
       setPhoneW(w);
       setBp(getBreakpoint(vw));
     };
@@ -310,7 +310,7 @@ export function PhoneStage() {
   }, []);
 
   const phoneH = phoneW * 2;
-  const stageH = Math.max(340, phoneH * (bp.isMobile ? 1.05 : 1.12));
+  const stageH = Math.max(500, phoneH * (bp.isMobile ? 1.05 : 1.12));
 
   return (
     <div
@@ -335,28 +335,9 @@ export function PhoneStage() {
         }}
       />
 
-      {/* Phone mockup */}
-      <div className="absolute z-[2] pointer-events-none" style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: `${phoneW}px` }}>
-        <div className="relative w-full aspect-[1/2] rounded-[1.5rem] md:rounded-[1.9rem] min-[1800px]:rounded-[3.5rem] border-4 border-zinc-600 p-3 md:p-4 shadow-2xl bg-gradient-to-br from-zinc-700 via-zinc-900 to-zinc-800">
-          <div className="relative h-full w-full overflow-hidden rounded-[22px] md:rounded-[1.5rem] min-[1800px]:rounded-[3rem] bg-white border border-neutral-200 shadow-inner">
-            <div className="absolute top-3 left-0 z-20 flex w-full items-center justify-between px-5 h-7 font-medium text-black text-xs md:text-sm select-none">
-              <div className="z-10 w-[50px] flex items-center justify-center font-semibold tracking-tight">9:41</div>
-              <div className="absolute left-1/2 -translate-x-1/2 rounded-full bg-black flex items-center justify-end shadow-sm w-20 md:w-22 h-6 pr-2.5">
-                <div className="rounded-full bg-neutral-900 w-2.5 h-2.5"></div>
-              </div>
-              <div className="flex items-center gap-1 z-10">
-                <svg className="fill-current w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24"><path d="M12.01 21.49L23.64 7c-.45-.34-4.93-4-11.64-4C5.28 3 .81 6.66.36 7l11.63 14.49z" /></svg>
-                <svg className="fill-current w-4 h-3 md:w-5 md:h-3.5" viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z" /></svg>
-              </div>
-            </div>
-            <div className="relative z-10 flex h-full flex-col items-center justify-between pt-[29%] pb-[14%]"></div>
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black w-24 md:w-32 h-1 md:h-1.5"></div>
-          </div>
-          <div className="absolute -right-1 top-1/5 w-1 h-12 rounded-r-sm bg-gradient-to-r from-zinc-700 to-zinc-500" />
-          <div className="absolute -left-1 top-1/6 w-1 h-8 rounded-l-sm bg-gradient-to-l from-zinc-700 to-zinc-500" />
-          <div className="absolute -left-1 top-1/4 w-1 h-8 rounded-l-sm bg-gradient-to-l from-zinc-700 to-zinc-500" />
-          <div className="absolute -left-1 top-1/3 w-1 h-8 rounded-l-sm bg-gradient-to-l from-zinc-700 to-zinc-500" />
-        </div>
+      {/* Phone mockup image */}
+      <div className="absolute z-[2] pointer-events-none flex justify-center items-center" style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: `${phoneW}px` }}>
+        <img src="/images/mobile.png" alt="Deloona Mobile App" className="w-full h-auto object-contain drop-shadow-2xl select-none" />
       </div>
 
       {/* Floating membership cards */}
