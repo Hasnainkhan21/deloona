@@ -194,14 +194,14 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
   card: CardData; offset: number; isActive: boolean; onSelect: () => void; phoneW: number; bp: BreakpointConfig;
 }) {
   const absOffset = Math.abs(offset);
-  const cardW = phoneW * 0.86;
-  const spread = cardW * 1.1 * bp.spreadMul;
+  const cardW = phoneW * 0.4;
+  const spread = cardW * 0.85 * bp.spreadMul;
   const translateX = offset * spread;
-  const baseZ = phoneW * 0.16;
+  const baseZ = phoneW * 0.12;
   const translateZ = isActive ? 2 : -absOffset * baseZ * 0.5 * bp.zDepthMul;
   const rotateY = offset * -14 * bp.rotYMul;
   const rotateZ = offset * 4 * bp.rotZMul;
-  const scale = isActive ? 1 : Math.max(0.6, 1 - absOffset * .10);
+  const scale = isActive ? 1 : Math.max(0.72, 1 - absOffset * 0.12);
   const opacity = absOffset > 2 ? 0 : 1 - absOffset * 0.3;
 
   return (
@@ -299,8 +299,10 @@ export function PhoneStage() {
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const w = Math.max(340, Math.min(vw * 0.36, vh * 0.55, 520));
+      // Increased from vw*0.55 to vw*0.75 and raised minimum from 480 to 650 so phone is immediately much larger!
+      const w = vw < 640
+        ? Math.max(360, Math.min(vw * 0.90, 500))
+        : Math.max(650, Math.min(vw * 0.75, 700));
       setPhoneW(w);
       setBp(getBreakpoint(vw));
     };
@@ -310,7 +312,7 @@ export function PhoneStage() {
   }, []);
 
   const phoneH = phoneW * 2;
-  const stageH = Math.max(500, phoneH * (bp.isMobile ? 1.05 : 1.12));
+  const stageH = Math.max(450, phoneH * (bp.isMobile ? 0.82 : 0.85));
 
   return (
     <div
@@ -337,7 +339,12 @@ export function PhoneStage() {
 
       {/* Phone mockup image */}
       <div className="absolute z-[2] pointer-events-none flex justify-center items-center" style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: `${phoneW}px` }}>
-        <img src="/images/mobile.png" alt="Deloona Mobile App" className="w-full h-auto object-contain drop-shadow-2xl select-none" />
+        <img
+          src="/images/mobile.png"
+          alt="Deloona Mobile App"
+          className="w-full h-auto object-contain drop-shadow-2xl select-none"
+          style={{ transform: "scale(1.1)" }}
+        />
       </div>
 
       {/* Floating membership cards */}
@@ -346,7 +353,7 @@ export function PhoneStage() {
       ))}
 
       {/* Indicator dots */}
-      <div className="absolute flex gap-[7px] justify-center z-[15]" style={{ bottom: bp.isMobile ? 10 : 16, left: 0, right: 0 }}>
+      <div className="absolute flex gap-[7px] justify-center z-[15]" style={{ top: `calc(50% + ${phoneW * 0.50}px)`, left: 0, right: 0 }}>
         {CARDS.map((c, i) => (
           <span
             key={c.id}
@@ -372,15 +379,11 @@ export function PhoneStage() {
 export default function MembershipShowcase() {
   return (
     <section
-      className="relative w-full flex flex-col items-center overflow-x-hidden select-none min-h-svh pb-12 pt-16 bg-[#F7F6F4]"
+      className="relative w-full  bg-[#F7F6F4]"
       style={{ paddingLeft: "5%", paddingRight: "5%" }}
     >
-      <style>{`
-        @keyframes heroFadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-        .hero-title { animation: heroFadeUp 0.4s ease both; }
-      `}</style>
-      <header className="shrink-0 text-center gap-3 flex flex-col items-center justify-center relative z-[5] w-full mb-4">
-        <p className="font-bold uppercase text-[#8A0C22] m-0" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
+      <header className="shrink-0 text-center gap-1.5 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">
+        <p className="font-bold uppercase text-[#8A0C22] mt-20" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
         <h2 className="font-extrabold text-[#2C2C2A] m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
         <p className="text-[#6B6A66] text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>
       </header>

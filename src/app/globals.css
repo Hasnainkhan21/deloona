@@ -51,13 +51,6 @@
   --color-daily-sunday: #3A3A3A;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 @layer base {
   * {
     margin: 0;
