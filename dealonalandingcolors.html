@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealona Landing Page — Design Colors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #F7F6F4;
+            padding: 40px 20px;
+            color: #2C2C2A;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2C2C2A;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #6B6A66;
+            margin-bottom: 40px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #D6D3CB;
+            color: #2C2C2A;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .color-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(20, 20, 18, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .color-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(20, 20, 18, 0.12);
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-info {
+            padding: 16px;
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2C2C2A;
+            margin-bottom: 4px;
+        }
+
+        .color-hex {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #6B6A66;
+            margin-bottom: 8px;
+        }
+
+        .color-usage {
+            font-size: 12px;
+            color: #6B6A66;
+            line-height: 1.4;
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .tier-card {
+            border-radius: 16px;
+            padding: 24px 20px;
+            color: white;
+            box-shadow: 0 8px 24px rgba(20, 20, 18, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-mini {
+            background: linear-gradient(135deg, #E8E6E1 0%, #D6D3CB 100%);
+            color: #2C2C2A;
+        }
+
+        .tier-smart {
+            background: linear-gradient(135deg, #C0102E 0%, #8A0C22 55%, #5E0716 100%);
+            box-shadow: 0 8px 24px rgba(192, 16, 46, 0.25);
+            position: relative;
+        }
+
+        .tier-smart::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .tier-pro {
+            background: linear-gradient(135deg, #8A0C22 0%, #5E0716 55%, #3A040D 100%);
+            box-shadow: 0 8px 24px rgba(90, 7, 22, 0.25);
+        }
+
+        .tier-elite {
+            background: linear-gradient(135deg, #2C2C2A 0%, #141412 70%);
+            border: 1px solid rgba(244, 197, 66, 0.3);
+            box-shadow: 0 8px 24px rgba(20, 20, 18, 0.12);
+        }
+
+        .tier-name {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .tier-price {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .tier-duration {
+            font-size: 12px;
+            opacity: 0.85;
+            margin-bottom: 12px;
+        }
+
+        .tier-slots {
+            font-size: 12px;
+            opacity: 0.85;
+        }
+
+        .tier-elite .tier-name {
+            color: #F4C542;
+        }
+
+        .daily-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 16px;
+        }
+
+        .daily-color {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(20, 20, 18, 0.08);
+            text-align: center;
+        }
+
+        .daily-swatch {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .daily-info {
+            background: white;
+            padding: 12px;
+            font-size: 12px;
+        }
+
+        .daily-day {
+            font-weight: 500;
+            color: #2C2C2A;
+            margin-bottom: 4px;
+        }
+
+        .daily-hex {
+            font-family: 'JetBrains Mono', monospace;
+            color: #6B6A66;
+            font-size: 11px;
+        }
+
+        .semantic-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(20, 20, 18, 0.08);
+        }
+
+        .semantic-table th {
+            background: #F7F6F4;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 12px;
+            color: #6B6A66;
+            border-bottom: 1px solid #D6D3CB;
+        }
+
+        .semantic-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #E8E6E1;
+            font-size: 13px;
+        }
+
+        .semantic-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .color-preview {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 1px solid #D6D3CB;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #D6D3CB;
+            text-align: center;
+            font-size: 12px;
+            color: #6B6A66;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #141412;
+                color: #F7F6F4;
+            }
+
+            h1, .color-name, .tier-name, .daily-day {
+                color: #F7F6F4;
+            }
+
+            .subtitle, .color-hex, .color-usage, .daily-hex, .semantic-table th {
+                color: #A9A7A1;
+            }
+
+            .semantic-table {
+                background: #1F1F1C;
+            }
+
+            .semantic-table th {
+                background: #2C2C2A;
+            }
+
+            .semantic-table th, .color-card {
+                border-color: #2C2C2A;
+            }
+
+            .semantic-table td {
+                border-color: #2C2C2A;
+            }
+
+            .color-card {
+                background: #2C2C2A;
+            }
+
+            h2 {
+                border-color: #3A3A3A;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dealona Landing Page — Design Colors</h1>
+        <p class="subtitle">Complete color system for public-facing surfaces</p>
+
+        <!-- MEMBERSHIP TIERS -->
+        <section>
+            <h2>Membership Tiers</h2>
+            <p style="margin-bottom: 24px; color: #6B6A66; font-size: 14px;">Four tiers defining the app's visual hierarchy</p>
+            <div class="tier-grid">
+                <div class="tier-card tier-mini">
+                    <div class="tier-name">Dealona Mini</div>
+                    <div class="tier-price">PKR 200</div>
+                    <div class="tier-duration">Valid for 24 hours</div>
+                    <div class="tier-slots">1 partner slot</div>
+                </div>
+                <div class="tier-card tier-smart">
+                    <div class="tier-name">Dealona Smart</div>
+                    <div class="tier-price">PKR 500</div>
+                    <div class="tier-duration">Valid for 7 days</div>
+                    <div class="tier-slots">3 partner slots</div>
+                </div>
+                <div class="tier-card tier-pro">
+                    <div class="tier-name">Dealona Pro</div>
+                    <div class="tier-price">PKR 1,000</div>
+                    <div class="tier-duration">Valid for 15 days</div>
+                    <div class="tier-slots">10 partner slots</div>
+                </div>
+                <div class="tier-card tier-elite">
+                    <div class="tier-name">Dealona Elite</div>
+                    <div class="tier-price">PKR 2,000</div>
+                    <div class="tier-duration">Valid for 30 days</div>
+                    <div class="tier-slots">Unlimited partners</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLOR FAMILIES -->
+        <section>
+            <h2>Color Families</h2>
+
+            <!-- Crimson -->
+            <h3 style="font-size: 16px; font-weight: 500; margin-top: 32px; margin-bottom: 16px; color: #2C2C2A;">Crimson — Membership Hue</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #F7D9DF;">-</div>
+                    <div class="color-info">
+                        <div class="color-name">Crimson 100</div>
+                        <div class="color-hex">#F7D9DF</div>
+                        <div class="color-usage">Light fills, rare badges</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #E0617A;">-</div>
+                    <div class="color-info">
+                        <div class="color-name">Crimson 300</div>
+                        <div class="color-hex">#E0617A</div>
+                        <div class="color-usage">Tint, intermediate</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #C0102E; color: white;">✓</div>
+                    <div class="color-info">
+                        <div class="color-name">Crimson 500</div>
+                        <div class="color-hex">#C0102E</div>
+                        <div class="color-usage">Smart card bright stop</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #8A0C22; color: white;">✓</div>
+                    <div class="color-info">
+                        <div class="color-name">Crimson 700</div>
+                        <div class="color-hex">#8A0C22</div>
+                        <div class="color-usage">Smart/Pro shared stop</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #5E0716; color: white;">✓</div>
+                    <div class="color-info">
+                        <div class="color-name">Crimson 800</div>
+                        <div class="color-hex">#5E0716</div>
+                        <div class="color-usage">Smart dark/Pro mid</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #3A040D; color: white;">✓</div>
+                    <div class="color-info">
+                        <div class="color-name">Crimson 900</div>
+                        <div class="color-hex">#3A040D</div>
+                        <div class="color-usage">Pro darkest stop</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ink -->
+            <h3 style="font-size: 16px; font-weight: 500; margin-top: 32px; margin-bottom: 16px; color: #2C2C2A;">Ink / Charcoal — Neutral Spine</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #F7F6F4; color: #6B6A66;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Ink 50</div>
+                        <div class="color-hex">#F7F6F4</div>
+                        <div class="color-usage">App background</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #E8E6E1; color: #6B6A66;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Ink 100</div>
+                        <div class="color-hex">#E8E6E1</div>
+                        <div class="color-usage">Mini bright stop, light surface</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #D6D3CB; color: #6B6A66;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Ink 300</div>
+                        <div class="color-hex">#D6D3CB</div>
+                        <div class="color-usage">Mini dark stop, border</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #6B6A66; color: white;">T</div>
+                    <div class="color-info">
+                        <div class="color-name">Ink 600</div>
+                        <div class="color-hex">#6B6A66</div>
+                        <div class="color-usage">Secondary text, muted</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #2C2C2A; color: white;">T</div>
+                    <div class="color-info">
+                        <div class="color-name">Ink 800</div>
+                        <div class="color-hex">#2C2C2A</div>
+                        <div class="color-usage">Mini text, Elite bright stop</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #141412; color: white;">T</div>
+                    <div class="color-info">
+                        <div class="color-name">Ink 900</div>
+                        <div class="color-hex">#141412</div>
+                        <div class="color-usage">Elite dark stop</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gold -->
+            <h3 style="font-size: 16px; font-weight: 500; margin-top: 32px; margin-bottom: 16px; color: #2C2C2A;">Gold — Premium Accent</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #F4C542; color: #2C2C2A;">★</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold 500</div>
+                        <div class="color-hex">#F4C542</div>
+                        <div class="color-usage">Elite badge, premium accent</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: rgba(244, 197, 66, 0.15); color: #6B6A66;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold 500 @ 15%</div>
+                        <div class="color-hex">rgba(244,197,66,0.15)</div>
+                        <div class="color-usage">Elite badge fill</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: rgba(244, 197, 66, 0.3); color: #6B6A66;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold 500 @ 30%</div>
+                        <div class="color-hex">rgba(244,197,66,0.3)</div>
+                        <div class="color-usage">Elite border hairline</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: rgba(244, 197, 66, 0.5); color: white;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Gold 500 @ 50%</div>
+                        <div class="color-hex">rgba(244,197,66,0.5)</div>
+                        <div class="color-usage">Elite badge border</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rust -->
+            <h3 style="font-size: 16px; font-weight: 500; margin-top: 32px; margin-bottom: 16px; color: #2C2C2A;">Rust — Error / Block State</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #F5E1D6; color: #6B6A66;">◌</div>
+                    <div class="color-info">
+                        <div class="color-name">Rust 100</div>
+                        <div class="color-hex">#F5E1D6</div>
+                        <div class="color-usage">Block-state tint</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #B5490F; color: white;">⚠</div>
+                    <div class="color-info">
+                        <div class="color-name">Rust 500</div>
+                        <div class="color-hex">#B5490F</div>
+                        <div class="color-usage">Error text, block icon</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #7A2F09; color: white;">⚠</div>
+                    <div class="color-info">
+                        <div class="color-name">Rust 700</div>
+                        <div class="color-hex">#7A2F09</div>
+                        <div class="color-usage">Block pressed state</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sage -->
+            <h3 style="font-size: 16px; font-weight: 500; margin-top: 32px; margin-bottom: 16px; color: #2C2C2A;">Sage — Positive / Confirmation</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #DCEAE1; color: #6B6A66;">✓</div>
+                    <div class="color-info">
+                        <div class="color-name">Sage 100</div>
+                        <div class="color-hex">#DCEAE1</div>
+                        <div class="color-usage">Success tinted background</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background-color: #4C7A5E; color: white;">✓</div>
+                    <div class="color-info">
+                        <div class="color-name">Sage 500</div>
+                        <div class="color-hex">#4C7A5E</div>
+                        <div class="color-usage">Success checkmark, active pills</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEMANTIC ROLES -->
+        <section>
+            <h2>Semantic Color Roles</h2>
+            <p style="margin-bottom: 16px; color: #6B6A66; font-size: 14px;">Always reference these roles in components, never hardcode primitives</p>
+            <table class="semantic-table">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Value</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #F7F6F4; border-color: #D6D3CB;"></span>surface-app</td>
+                        <td style="font-family: 'JetBrains Mono';">Ink 50</td>
+                        <td>App background, light mode</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #FFFFFF;"></span>surface-card</td>
+                        <td style="font-family: 'JetBrains Mono';">#FFFFFF</td>
+                        <td>White cards and sheets</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #2C2C2A;"></span>text-primary</td>
+                        <td style="font-family: 'JetBrains Mono';">Ink 800</td>
+                        <td>Primary text, headings</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #6B6A66;"></span>text-muted</td>
+                        <td style="font-family: 'JetBrains Mono';">Ink 600</td>
+                        <td>Secondary text, captions</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #D6D3CB;"></span>border-default</td>
+                        <td style="font-family: 'JetBrains Mono';">Ink 300 @ 40%</td>
+                        <td>Dividers, field borders</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #8A0C22;"></span>brand-primary</td>
+                        <td style="font-family: 'JetBrains Mono';">Crimson 700</td>
+                        <td>Buttons, nav active, links</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #B5490F;"></span>danger / block</td>
+                        <td style="font-family: 'JetBrains Mono';">Rust 500</td>
+                        <td>Error text, block icons</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #4C7A5E;"></span>positive</td>
+                        <td style="font-family: 'JetBrains Mono';">Sage 500</td>
+                        <td>Success checks, active chips</td>
+                    </tr>
+                    <tr>
+                        <td><span class="color-preview" style="background-color: #F4C542;"></span>premium-accent</td>
+                        <td style="font-family: 'JetBrains Mono';">Gold 500</td>
+                        <td>Elite context only, sparingly</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- DAILY ACCENT COLORS -->
+        <section>
+            <h2>Daily Accent Colors — Anti-Abuse System</h2>
+            <p style="margin-bottom: 24px; color: #6B6A66; font-size: 14px;">Rotating daily identifiers for cashier verification (live clock + accent color)</p>
+            <div class="daily-grid">
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #3B6E8C;">MON</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Monday</div>
+                        <div class="daily-hex">#3B6E8C</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Blue</div>
+                    </div>
+                </div>
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #4C7A5E;">TUE</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Tuesday</div>
+                        <div class="daily-hex">#4C7A5E</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Green</div>
+                    </div>
+                </div>
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #8C6B3B;">WED</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Wednesday</div>
+                        <div class="daily-hex">#8C6B3B</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Brown</div>
+                    </div>
+                </div>
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #6B5B95;">THU</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Thursday</div>
+                        <div class="daily-hex">#6B5B95</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Purple</div>
+                    </div>
+                </div>
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #D68A1F;">FRI</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Friday</div>
+                        <div class="daily-hex">#D68A1F</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Orange</div>
+                    </div>
+                </div>
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #2E8C82;">SAT</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Saturday</div>
+                        <div class="daily-hex">#2E8C82</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Teal</div>
+                    </div>
+                </div>
+                <div class="daily-color">
+                    <div class="daily-swatch" style="background-color: #3A3A3A;">SUN</div>
+                    <div class="daily-info">
+                        <div class="daily-day">Sunday</div>
+                        <div class="daily-hex">#3A3A3A</div>
+                        <div style="margin-top: 4px; font-size: 11px; color: #6B6A66;">Grey</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TYPOGRAPHY -->
+        <section>
+            <h2>Typography</h2>
+            <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 4px 12px rgba(20, 20, 18, 0.08);">
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 12px; color: #6B6A66; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 500;">Display Typeface</div>
+                    <div style="font-size: 20px; font-weight: 500;">Plus Jakarta Sans</div>
+                    <div style="font-size: 13px; color: #6B6A66; margin-top: 4px;">Warm geometric sans, rounded numerals, 500 weight default</div>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 12px; color: #6B6A66; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 500;">Body Typeface</div>
+                    <div style="font-size: 20px; font-weight: 500;">Plus Jakarta Sans</div>
+                    <div style="font-size: 13px; color: #6B6A66; margin-top: 4px;">Same as display — consistent throughout the app</div>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <div style="font-size: 12px; color: #6B6A66; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 500;">Monospace (Timestamps, Codes)</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 500;">JetBrains Mono</div>
+                    <div style="font-size: 13px; color: #6B6A66; margin-top: 4px;">Tabular figures for live clock, redemption codes</div>
+                </div>
+                <div style="border-top: 1px solid #D6D3CB; padding-top: 20px;">
+                    <div style="font-size: 12px; color: #6B6A66; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; font-weight: 500;">Scale</div>
+                    <div style="font-size: 13px; line-height: 1.6;">
+                        <div><strong>Display:</strong> 22–28px / 500</div>
+                        <div><strong>Title:</strong> 18px / 500</div>
+                        <div><strong>Body:</strong> 14–15px / 500</div>
+                        <div><strong>Label:</strong> 10–11px / 500 (uppercase, 1px tracking)</div>
+                        <div><strong>Caption:</strong> 9px / 500</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>Dealona — Design Color Reference</p>
+            <p style="margin-top: 8px;">Based on design tokens locked by DEC-13 (2026-07-15)</p>
+        </div>
+    </div>
+</body>
+</html>

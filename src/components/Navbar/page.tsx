@@ -12,16 +12,16 @@ export default function Navbar() {
           paddingLeft: "clamp(24px, 6vw, 80px)",
           paddingRight: "clamp(24px, 6vw, 80px)",
           boxSizing: "border-box",
-          background: "rgba(255, 255, 255, 0.45)",
+          background: "rgba(247, 246, 244, 0.60)",  /* ink-50 tinted glass */
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(0, 0, 0, 0.06)",
+          borderBottom: "1px solid rgba(214, 211, 203, 0.55)",  /* ink-300 hairline */
         }}
       >
         {/* Logo */}
         <a
           href="#"
-          className="text-xl md:text-3xl font-extrabold tracking-tight text-blue-700 select-none"
+          className="text-xl md:text-3xl font-extrabold tracking-tight select-none text-[#8A0C22]"
           style={{ textDecoration: "none" }}
         >
           Deloona
@@ -33,7 +33,7 @@ export default function Navbar() {
             <li key={item}>
               <a
                 href="#"
-                className="text-sm md:text-lg font-medium text-zinc-700 hover:text-blue-600 transition-colors duration-200 select-none"
+                className="text-sm md:text-lg font-medium text-[#2C2C2A] hover:text-[#8A0C22] transition-colors duration-200 select-none"
                 style={{ textDecoration: "none" }}
               >
                 {item}
@@ -43,7 +43,7 @@ export default function Navbar() {
         </ul>
 
         {/* CTA Button */}
-        <button className="bg-blue-400 hover:bg-blue-500 transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-white shadow-lg cursor-pointer select-none">
+        <button className="bg-[#8A0C22] hover:bg-[#5E0716] transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-white shadow-lg cursor-pointer select-none">
           Get Started
         </button>
       </nav>

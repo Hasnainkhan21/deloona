@@ -334,10 +334,10 @@ export default function MembershipCards({
       {/* Carousel Header & Controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-4 mb-4">
         <div className="text-center sm:text-left">
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#034ea2]">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#8A0C22]">
             Membership Tiers Carousel
           </h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+          <p className="text-sm text-[#6B6A66] mt-1">
             Slide and click any membership card below to display it live on the phone screen
           </p>
         </div>
@@ -347,7 +347,7 @@ export default function MembershipCards({
           <button
             type="button"
             onClick={handlePrev}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-neutral-200 shadow-sm hover:bg-[#034ea2] hover:text-white transition-all text-neutral-700 cursor-pointer"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-[#D6D3CB] shadow-sm hover:bg-[#8A0C22] hover:text-white transition-all text-[#2C2C2A] cursor-pointer"
             aria-label="Previous card"
           >
             <i className="ti ti-chevron-left text-lg" />
@@ -359,7 +359,7 @@ export default function MembershipCards({
                 key={c.id}
                 type="button"
                 onClick={() => onSelectCard(c.id)}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${selectedCardId === c.id ? "w-7 bg-[#034ea2]" : "w-2.5 bg-neutral-300 hover:bg-neutral-400"
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${selectedCardId === c.id ? "w-7 bg-[#8A0C22]" : "w-2.5 bg-[#D6D3CB] hover:bg-[#6B6A66]"
                   }`}
                 aria-label={`Select ${c.name}`}
               />
@@ -369,7 +369,7 @@ export default function MembershipCards({
           <button
             type="button"
             onClick={handleNext}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-neutral-200 shadow-sm hover:bg-[#034ea2] hover:text-white transition-all text-neutral-700 cursor-pointer"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-[#D6D3CB] shadow-sm hover:bg-[#8A0C22] hover:text-white transition-all text-[#2C2C2A] cursor-pointer"
             aria-label="Next card"
           >
             <i className="ti ti-chevron-right text-lg" />
@@ -393,7 +393,7 @@ export default function MembershipCards({
             >
               <div
                 className={`rounded-2xl transition-all duration-300 p-2 ${isSelected
-                  ? "bg-gradient-to-r from-[#034ea2] via-blue-500 to-[#F4C542] shadow-xl scale-[1.03]"
+                  ? "bg-gradient-to-r from-[#3A040D] via-[#8A0C22] to-[#F4C542] shadow-xl scale-[1.03]"
                   : "hover:scale-[1.01] hover:shadow-md bg-transparent"
                   }`}
               >
@@ -404,8 +404,8 @@ export default function MembershipCards({
               <div className="mt-2 text-center flex items-center justify-center gap-1.5">
                 <span
                   className={`text-xs font-semibold px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${isSelected
-                    ? "bg-[#034ea2] text-white shadow-md scale-105"
-                    : "bg-neutral-100 text-neutral-600 group-hover:bg-neutral-200"
+                    ? "bg-[#8A0C22] text-white shadow-md scale-105"
+                    : "bg-[#F7F6F4] text-[#6B6A66] group-hover:bg-[#E8E6E1]"
                     }`}
                 >
                   {isSelected ? (

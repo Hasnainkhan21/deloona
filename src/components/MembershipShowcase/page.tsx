@@ -391,7 +391,7 @@ export function PhoneStage() {
 export default function MembershipShowcase() {
   return (
     <section
-      className="relative w-full flex flex-col items-center overflow-x-hidden select-none min-h-svh pb-12 pt-16 bg-[radial-gradient(circle_at_50%_50%,#ffffff_0%,#f4f4f7_65%,#eaeaef_100%)]"
+      className="relative w-full flex flex-col items-center overflow-x-hidden select-none min-h-svh pb-12 pt-16 bg-[#F7F6F4]"
       style={{ paddingLeft: "5%", paddingRight: "5%" }}
     >
       <style>{`
@@ -399,9 +399,9 @@ export default function MembershipShowcase() {
         .hero-title { animation: heroFadeUp 0.4s ease both; }
       `}</style>
       <header className="shrink-0 text-center gap-3 flex flex-col items-center justify-center relative z-[5] w-full mb-4">
-        <p className="font-bold uppercase text-gray-500 m-0" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
-        <h2 className="font-extrabold text-gray-900 m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
-        <p className="text-gray-500 text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>
+        <p className="font-bold uppercase text-[#8A0C22] m-0" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
+        <h2 className="font-extrabold text-[#2C2C2A] m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
+        <p className="text-[#6B6A66] text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>
       </header>
       <PhoneStage />
     </section>

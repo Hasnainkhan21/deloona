@@ -3,6 +3,7 @@ import Hero from "@/components/Hero/page";
 import MembershipShowcase from "@/components/MembershipShowcase/page";
 import AppDownloadSection from "@/components/Appdownload/page";
 import InstaReels from "@/components/InstaReels/page";
+import Footer from "@/components/Footer/page";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <div id="download">
         <AppDownloadSection />
       </div>
+      <Footer />
 
     </main>
   );

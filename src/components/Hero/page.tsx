@@ -22,20 +22,20 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full flex flex-col gap-12 items-center bg-cover bg-center bg-no-repeat px-6 select-none overflow-hidden"
+      className="relative w-full flex flex-col gap-12 items-center px-6 select-none overflow-hidden"
       style={{
-        backgroundImage: 'url("/images/hero-bg.jpg")',
+        backgroundColor: "#8A0C22", /* Crimson 700 — brand-primary from dealonalandingcolors.html */
         paddingTop: "160px", /* Increased padding so H1 heading has ample breathing room below the navbar */
         paddingBottom: "100px",
       }}
     >
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/65 z-0 pointer-events-none" />
+      {/* Subtle dark gradient overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#141412]/30 via-transparent to-[#141412]/40 z-0 pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center w-full max-w-5xl mx-auto gap-6">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md">
-          MAKE EVERY MEAL MORE <span className="text-[#4da6ff]">REWARDING</span>
+          MAKE EVERY MEAL MORE <span className="text-[#F4C542]">REWARDING</span>
         </h1>
 
         <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-3xl leading-relaxed drop-shadow-sm font-normal">
@@ -43,7 +43,7 @@ export default function Hero() {
         </p>
 
         {/* CTA Button */}
-        <button className="bg-blue-400 hover:bg-blue-500 transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-white shadow-lg cursor-pointer">
+        <button className="bg-[#141412] hover:bg-[#2C2C2A] transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-white shadow-lg cursor-pointer">
           Get Started
         </button>
       </div>
