@@ -11,7 +11,7 @@ export default function AppDownloadSection() {
                 </div>
 
                 {/* Right Side */}
-                <div className="bg-white rounded-3xl min-h-70 min-w-80  flex flex-col items-center justify-center gap-6">
+                <div className="bg-white rounded-3xl min-h-80 min-w-60 sm:min-w-72  flex flex-col items-center justify-center gap-6">
 
                     {/* QR Code */}
                     <img
@@ -21,7 +21,7 @@ export default function AppDownloadSection() {
                     />
 
                     {/* Store Buttons */}
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 sm:flex-row flex-col ">
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
                             alt="Google Play"
