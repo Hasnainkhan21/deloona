@@ -38,7 +38,7 @@ export default function Hero() {
   const cardTransform = `translate(-50%, -50%) translateX(${cardTranslateX}px) rotate(${cardRotateDeg}deg) translateZ(-30px)`;
 
   return (
-    <section className="relative w-full flex items-center px-4 sm:px-8 lg:px-16 pb-6 pt-40 lg:pt-8 select-none overflow-hidden bg-[#8A0C22]">
+    <section className="relative w-full sm:h-screen flex items-center px-4 sm:px-8 lg:px-16 pb-6 pt-40 lg:pt-8 select-none overflow-hidden bg-[#8A0C22]">
 
       {/* Subtle dark gradient overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#141412]/30 via-transparent to-[#141412]/40 z-0 pointer-events-none" />

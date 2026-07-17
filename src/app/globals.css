@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F7F6F4; /* ink-50 — Deloona app background */
-  --foreground: #2C2C2A; /* ink-800 — Deloona primary text */
+  --background: #F7F6F4;
+  /* ink-50 — Deloona app background */
+  --foreground: #2C2C2A;
+  /* ink-800 — Deloona primary text */
 }
 
 @theme inline {
@@ -58,12 +60,14 @@
     box-sizing: border-box;
   }
 
-  body {
-    background: var(--background);
+  :root, html, body, main {
+    background: #F7F6F4 !important;
+    background-color: #F7F6F4 !important;
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
     width: 100%;
+    min-height: 100vh;
   }
 }
 
