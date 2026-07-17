@@ -45,7 +45,7 @@ export default function Navbar() {
           <button className="border border-[#6B6A66] hover:bg-[#3A3A3A] px-4 py-2 rounded-full text-sm font-medium transition cursor-pointer">
             Contact
           </button>
-          <button className="bg-white hover:shadow-[0px_0px_30px_14px] shadow-[0px_0px_30px_7px] hover:shadow-white/50 shadow-white/50 text-[#141412] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#E8E6E1] transition duration-300 cursor-pointer font-bold">
+          <button className="bg-white   hover:shadow-white/50 shadow-white/50 text-[#141412] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#8A0C22] hover:text-white transition duration-300 cursor-pointer font-bold">
             Get Started
           </button>
         </div>
@@ -86,7 +86,7 @@ export default function Navbar() {
               <button onClick={() => setIsMobileMenuOpen(false)} className="border border-[#6B6A66] hover:bg-[#3A3A3A] w-full py-2.5 rounded-full text-sm font-medium transition cursor-pointer text-white">
                 Contact
               </button>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="bg-white hover:shadow-[0px_0px_20px_8px] shadow-[0px_0px_20px_4px] shadow-white/40 text-[#141412] w-full py-2.5 rounded-full text-sm font-bold hover:bg-[#E8E6E1] transition duration-300 cursor-pointer">
+              <button onClick={() => setIsMobileMenuOpen(false)} className="bg-white shadow-white/40 text-[#141412] w-full py-2.5 rounded-full text-sm font-bold hover:bg-[#8A0C22] hover:text-white transition duration-300 cursor-pointer">
                 Get Started
               </button>
             </div>

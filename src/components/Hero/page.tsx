@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
@@ -19,7 +20,9 @@ export default function Hero() {
       }
     };
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
+      const w = window.innerWidth;
+      setIsMobile(w < 640);
+      setIsMobileOrTablet(w < 1024);
     };
     handleResize();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -32,16 +35,17 @@ export default function Hero() {
   }, []);
 
   // Scroll-driven & Hover-driven card animation
-  const maxTranslateX = isMobile ? 50 : 130;
+  const maxTranslateX = isMobile ? 50 : 90;
   const maxRotate = 8;
 
   const scrollTranslateX = isMobile
     ? Math.min(50, -50 + scrollY * 0.22)
     : Math.min(120, -110 + scrollY * 0.45) * 1.25;
-  const scrollRotateDeg = Math.min(8, -12 + scrollY * 0.04);
+  const scrollRotateDeg = Math.min(8, -12 + scrollY * 0.06);
 
-  const cardTranslateX = isHovered ? maxTranslateX : scrollTranslateX;
-  const cardRotateDeg = isHovered ? maxRotate : scrollRotateDeg;
+  const activeHover = isHovered && !isMobileOrTablet;
+  const cardTranslateX = activeHover ? maxTranslateX : scrollTranslateX;
+  const cardRotateDeg = activeHover ? maxRotate : scrollRotateDeg;
 
   const cardTransform = `translate(-50%, -50%) translateX(${cardTranslateX}px) rotate(${cardRotateDeg}deg) translateZ(-30px)`;
 
@@ -77,12 +81,10 @@ export default function Hero() {
         >
           {/* Outer container — phone + card stacked, here you can change size of phone */}
           <div
-            className="relative flex items-center justify-center w-full max-w-[95vw] sm:max-w-[85vw] md:max-w-[55vw] lg:max-w-[470px] cursor-pointer"
+            className={`relative flex items-center justify-center w-full max-w-[95vw] sm:max-w-[85vw] md:max-w-[55vw] lg:max-w-[470px] ${isMobileOrTablet ? "" : "cursor-pointer"}`}
             style={{ minHeight: "clamp(400px, 90vw, 780px)" }}
-            onMouseEnter={() => setIsHovered(true)}
+            onMouseEnter={() => !isMobileOrTablet && setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onTouchStart={() => setIsHovered(true)}
-            onTouchEnd={() => setIsHovered(false)}
           >
 
             {/* ── Membership Card (behind phone, z-0) ── */}
