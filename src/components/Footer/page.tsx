@@ -5,7 +5,7 @@ export default function Footer() {
         <footer className="flex flex-col w-full font-sans text-[#2C2C2A] border-t-2 border-[#8A0C22]">
             {/* CTA banner */}
             <div className="text-center py-16 px-5">
-                <h1 className="text-4xl font-bold mb-3 text-[#2C2C2A]">READY.SET.DELOONA</h1>
+                <h1 className="text-3xl sm:text-5xl font-bold mb-3 text-[#2C2C2A]">READY.SET.DELOONA</h1>
                 <p className="text-lg mb-5 text-[#6B6A66]">Join millions that are already making great Discounts</p>
                 <button className="px-6 py-3 text-base bg-[#8A0C22] text-white rounded-md hover:bg-[#5E0716] transition-colors cursor-pointer shadow-md">
                     Let&apos;s Deloona

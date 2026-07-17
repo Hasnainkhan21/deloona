@@ -194,8 +194,9 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
   card: CardData; offset: number; isActive: boolean; onSelect: () => void; phoneW: number; bp: BreakpointConfig;
 }) {
   const absOffset = Math.abs(offset);
-  const cardW = phoneW * 0.4;
-  const spread = cardW * 0.85 * bp.spreadMul;
+  const cardW = bp.isMobile ? phoneW * 0.50 : phoneW * 0.38;
+  const cardH = cardW * 1.586;
+  const spread = bp.isMobile ? cardW * 0.65 : cardW * 1 * bp.spreadMul;
   const translateX = offset * spread;
   const baseZ = phoneW * 0.12;
   const translateZ = isActive ? 2 : -absOffset * baseZ * 0.5 * bp.zDepthMul;
@@ -209,18 +210,18 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
       onClick={onSelect}
       style={{
         position: "absolute", left: "50%", top: "50%",
-        width: cardW, marginLeft: -cardW / 2, marginTop: -(cardW / 1.586) * 0.5,
+        width: cardW, height: cardH, marginLeft: -cardW / 2, marginTop: -cardH / 2,
         cursor: isActive ? "default" : "pointer",
-        transition: "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        transition: bp.isMobile ? "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease" : "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
         transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
         opacity, zIndex: isActive ? 10 : 10 - absOffset,
         pointerEvents: absOffset > 2 ? "none" : "auto",
       }}
     >
       <div
-        className="w-full relative overflow-hidden flex flex-col justify-between"
+        className="w-full h-full relative overflow-hidden flex flex-col justify-between"
         style={{
-          aspectRatio: "1.586", borderRadius: "5%", padding: "6% 7%", boxSizing: "border-box",
+          borderRadius: "clamp(14px, 1.6vw, 22px)", padding: "7% 8%", boxSizing: "border-box",
           background: card.gradient, color: card.textColor,
           border: card.id === "elite" ? "0.5px solid rgba(244,197,66,0.4)" : "none",
           boxShadow: isActive
@@ -230,22 +231,22 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
       >
         {card.renderOverlay?.()}
         {card.id === "elite" && <div className="absolute top-0 left-0 right-0 h-px" style={{ background: "linear-gradient(90deg,transparent,#F4C542,transparent)" }} />}
-        <div className="flex justify-between items-start relative">
-          <span className="font-semibold" style={{ fontSize: "clamp(11px, 1.1vw, 18px)" }}>dealona</span>
+        <div className="flex justify-between items-start relative z-10">
+          <span className="font-semibold" style={{ fontSize: "clamp(12px, 1.2vw, 19px)" }}>dealona</span>
           <span className="font-semibold rounded-full" style={{ fontSize: "clamp(7px, 0.65vw, 11px)", letterSpacing: "0.8px", background: card.badgeBg, border: card.badgeBorder, color: card.badgeColor, padding: "3px 10px" }}>{card.badge}</span>
         </div>
-        <div className="relative">
-          <p className="m-0 uppercase" style={{ fontSize: "clamp(6px, 0.5vw, 10px)", letterSpacing: 1, color: card.subTextColor }}>Member</p>
-          <p className="font-semibold mt-0.5 m-0" style={{ fontSize: "clamp(12px, 1vw, 21px)" }}>Ali Khan</p>
+        <div className="relative z-10 my-auto py-2">
+          <p className="m-0 uppercase" style={{ fontSize: "clamp(7px, 0.55vw, 11px)", letterSpacing: 1, color: card.subTextColor }}>Member</p>
+          <p className="font-semibold mt-0.5 m-0" style={{ fontSize: "clamp(13px, 1.1vw, 22px)" }}>Ali Khan</p>
         </div>
-        <div className="flex justify-between items-end relative">
+        <div className="flex justify-between items-end relative z-10 mb-4 sm:mb-5">
           <div>
-            <p className="m-0 uppercase" style={{ fontSize: "clamp(6px, 0.5vw, 10px)", letterSpacing: 1, color: card.subTextColor }}>Valid for</p>
-            <p className="font-semibold mt-0.5 m-0" style={{ fontSize: "clamp(10px, 0.85vw, 17px)" }}>{card.validFor}</p>
+            <p className="m-0 uppercase" style={{ fontSize: "clamp(7px, 0.55vw, 11px)", letterSpacing: 1, color: card.subTextColor }}>Valid for</p>
+            <p className="font-semibold mt-0.5 m-0" style={{ fontSize: "clamp(11px, 0.9vw, 18px)" }}>{card.validFor}</p>
           </div>
           {card.renderSlot()}
         </div>
-        <span className="absolute" style={{ bottom: "5%", left: "7%", fontSize: "clamp(6px, 0.45vw, 9.5px)", letterSpacing: 1, color: card.subTextColor }}>{card.cardNo}</span>
+        <span className="absolute z-10" style={{ bottom: "4%", left: "8%", fontSize: "clamp(7px, 0.55vw, 11px)", letterSpacing: 1.2, color: card.subTextColor }}>{card.cardNo}</span>
       </div>
     </div>
   );
@@ -301,7 +302,7 @@ export function PhoneStage() {
       const vw = window.innerWidth;
       // Increased from vw*0.55 to vw*0.75 and raised minimum from 480 to 650 so phone is immediately much larger!
       const w = vw < 640
-        ? Math.max(360, Math.min(vw * 0.90, 500))
+        ? Math.max(360, Math.min(vw * 0.95, 500))
         : Math.max(650, Math.min(vw * 0.75, 700));
       setPhoneW(w);
       setBp(getBreakpoint(vw));
@@ -343,7 +344,7 @@ export function PhoneStage() {
           src="/images/mobile.png"
           alt="Deloona Mobile App"
           className="w-full h-auto object-contain drop-shadow-2xl select-none"
-          style={{ transform: "scale(1.1)" }}
+          style={{ transform: bp.isMobile ? "scale(1.4)" : "scale(1.1)" }}
         />
       </div>
 
@@ -353,7 +354,7 @@ export function PhoneStage() {
       ))}
 
       {/* Indicator dots */}
-      <div className="absolute flex gap-[7px] justify-center z-[15]" style={{ top: `calc(50% + ${phoneW * 0.50}px)`, left: 0, right: 0 }}>
+      <div className="absolute bottom-8 sm:bottom-60 left-0 right-0 flex justify-center gap-[7px] z-[15]">
         {CARDS.map((c, i) => (
           <span
             key={c.id}
@@ -379,10 +380,10 @@ export function PhoneStage() {
 export default function MembershipShowcase() {
   return (
     <section
-      className="relative w-full  bg-[#F7F6F4]"
+      className="relative w-full sm:h-[120vh] bg-[#F7F6F4]"
       style={{ paddingLeft: "5%", paddingRight: "5%" }}
     >
-      <header className="shrink-0 text-center gap-1.5 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">
+      <header className="shrink-0 text-center gap-1 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">
         <p className="font-bold uppercase text-[#8A0C22] mt-20" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
         <h2 className="font-extrabold text-[#2C2C2A] m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
         <p className="text-[#6B6A66] text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>

@@ -4,20 +4,38 @@ import React, { useEffect, useState } from "react";
 
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    handleResize();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   // Scroll-driven card animation
-  const cardTranslateX = Math.min(120, -110 + scrollY * 0.45);
+  const cardTranslateX = isMobile
+    ? Math.min(50, -50 + scrollY * 0.22)
+    : Math.min(120, -110 + scrollY * 0.45) * 1.25;
   const cardRotateDeg = Math.min(8, -12 + scrollY * 0.04);
-  const cardTransform = `translate(-50%, -50%) translateX(${cardTranslateX * 1.25}px) rotate(${cardRotateDeg}deg) translateZ(-30px)`;
+  const cardTransform = `translate(-50%, -50%) translateX(${cardTranslateX}px) rotate(${cardRotateDeg}deg) translateZ(-30px)`;
 
   return (
     <section className="relative w-full flex items-center px-4 sm:px-8 lg:px-16 pb-6 pt-40 lg:pt-8 select-none overflow-hidden bg-[#8A0C22]">
@@ -57,7 +75,7 @@ export default function Hero() {
 
             {/* ── Membership Card (behind phone, z-0) ── */}
             <div
-              className="absolute z-0 shadow-2xl transition-transform duration-150 ease-out flex flex-col justify-between rounded-[20px] p-5 box-border text-white will-change-transform"
+              className={`absolute z-0 shadow-2xl ${isMobile ? "" : "transition-transform duration-150 ease-out"} flex flex-col justify-between rounded-[20px] p-5 box-border text-white will-change-transform`}
               style={{
                 width: "clamp(180px, 24vw, 220px)",
                 height: "clamp(285px, 38vw, 340px)",
