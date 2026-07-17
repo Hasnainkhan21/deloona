@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -30,15 +31,22 @@ export default function Hero() {
     };
   }, []);
 
-  // Scroll-driven card animation
-  const cardTranslateX = isMobile
+  // Scroll-driven & Hover-driven card animation
+  const maxTranslateX = isMobile ? 50 : 130;
+  const maxRotate = 8;
+
+  const scrollTranslateX = isMobile
     ? Math.min(50, -50 + scrollY * 0.22)
     : Math.min(120, -110 + scrollY * 0.45) * 1.25;
-  const cardRotateDeg = Math.min(8, -12 + scrollY * 0.04);
+  const scrollRotateDeg = Math.min(8, -12 + scrollY * 0.04);
+
+  const cardTranslateX = isHovered ? maxTranslateX : scrollTranslateX;
+  const cardRotateDeg = isHovered ? maxRotate : scrollRotateDeg;
+
   const cardTransform = `translate(-50%, -50%) translateX(${cardTranslateX}px) rotate(${cardRotateDeg}deg) translateZ(-30px)`;
 
   return (
-    <section className="relative w-full sm:h-screen flex items-center px-4 sm:px-8 lg:px-16 pb-6 pt-40 lg:pt-8 select-none overflow-hidden bg-[#8A0C22]">
+    <section className="relative w-full md:h-screen flex items-center px-4 sm:px-8 lg:px-16 pb-6 pt-40 md:pt-60 lg:pt-8 select-none overflow-hidden bg-[#8A0C22]">
 
       {/* Subtle dark gradient overlay for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#141412]/30 via-transparent to-[#141412]/40 z-0 pointer-events-none" />
@@ -69,16 +77,21 @@ export default function Hero() {
         >
           {/* Outer container — phone + card stacked, here you can change size of phone */}
           <div
-            className="relative flex items-center justify-center w-full max-w-[95vw] sm:max-w-[85vw] md:max-w-[55vw] lg:max-w-[470px]"
+            className="relative flex items-center justify-center w-full max-w-[95vw] sm:max-w-[85vw] md:max-w-[55vw] lg:max-w-[470px] cursor-pointer"
             style={{ minHeight: "clamp(400px, 90vw, 780px)" }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={() => setIsHovered(true)}
+            onTouchEnd={() => setIsHovered(false)}
           >
 
             {/* ── Membership Card (behind phone, z-0) ── */}
             <div
-              className={`absolute z-0 shadow-2xl ${isMobile ? "" : "transition-transform duration-150 ease-out"} flex flex-col justify-between rounded-[20px] p-5 box-border text-white will-change-transform`}
+              className="absolute z-0 shadow-2xl transition-transform duration-700 ease-out flex flex-col justify-between rounded-[20px] p-5 box-border text-white will-change-transform"
               style={{
                 width: "clamp(180px, 24vw, 220px)",
-                height: "clamp(285px, 38vw, 340px)",
+                height: "auto",
+                aspectRatio: "53.98 / 85.6", // Exact physical card ratio (85.6 mm by 53.98 mm)
                 background: "linear-gradient(135deg,#C0102E 0%,#8A0C22 55%,#5E0716 100%)",
                 boxShadow: "0 25px 60px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(255,255,255,0.22) inset",
                 top: "50%",

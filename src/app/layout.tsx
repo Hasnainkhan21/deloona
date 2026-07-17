@@ -25,7 +25,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-[#F7F6F4]`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      style={{ backgroundColor: "#F7F6F4" }}
     >
       <head>
         <link
@@ -33,7 +34,12 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#F7F6F4] text-[#2C2C2A]">{children}</body>
+      <body
+        className="min-h-full flex flex-col"
+        style={{ backgroundColor: "#F7F6F4", color: "#2C2C2A" }}
+      >
+        {children}
+      </body>
     </html>
   );
 }

@@ -7,7 +7,7 @@ import Footer from "@/components/Footer/page";
 
 export default function Home() {
   return (
-    <main className="w-full overflow-x-hidden" style={{ margin: 0, padding: "0 5%" }}>
+    <main className="w-full min-h-screen overflow-x-hidden" style={{ margin: 0, padding: "0 5%" }}>
       {/* Navbar parent full width */}
       <div className="w-full">
         <Navbar />
@@ -17,11 +17,11 @@ export default function Home() {
       <div className="full-bleed">
         <Hero />
       </div>
-      <div id="showcase" className="full-bleed">
+      <div id="showcase" className="full-bleed bg-ink-50 w-full">
         <MembershipShowcase />
       </div>
       <InstaReels />
-      <div id="download">
+      <div id="download" className="w-full bg-ink-50">
         <AppDownloadSection />
       </div>
       <Footer />

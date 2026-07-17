@@ -195,7 +195,8 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
 }) {
   const absOffset = Math.abs(offset);
   const cardW = bp.isMobile ? phoneW * 0.50 : phoneW * 0.38;
-  const cardH = cardW * 1.586;
+  const CARD_RATIO = 85.6 / 53.98; // Exact physical card ratio (85.6 mm by 53.98 mm)
+  const cardH = cardW * CARD_RATIO;
   const spread = bp.isMobile ? cardW * 0.65 : cardW * 1 * bp.spreadMul;
   const translateX = offset * spread;
   const baseZ = phoneW * 0.12;
@@ -210,7 +211,7 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
       onClick={onSelect}
       style={{
         position: "absolute", left: "50%", top: "50%",
-        width: cardW, height: cardH, marginLeft: -cardW / 2, marginTop: -cardH / 2,
+        width: cardW, height: cardH, aspectRatio: "53.98 / 85.6", marginLeft: -cardW / 2, marginTop: -cardH / 2,
         cursor: isActive ? "default" : "pointer",
         transition: bp.isMobile ? "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease" : "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
         transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
@@ -380,7 +381,7 @@ export function PhoneStage() {
 export default function MembershipShowcase() {
   return (
     <section
-      className="relative w-full sm:h-[120vh] bg-[#F7F6F4]"
+      className="relative w-full min-h-[850px] md:h-[120vh] bg-[#F7F6F4]"
       style={{ paddingLeft: "5%", paddingRight: "5%" }}
     >
       <header className="shrink-0 text-center gap-1 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">
