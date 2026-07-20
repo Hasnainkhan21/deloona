@@ -13,7 +13,7 @@ export default function Footer() {
             </div>
 
             {/* Footer links panel */}
-            <div className="flex flex-wrap border border-[#2C2C2A]/60 rounded-[24px] justify-between py-12 px-6 md:px-10 bg-gradient-to-br from-[#8A0C22] to-[#3A040D] text-white shadow-2xl mb-12">
+            <div className="flex flex-wrap border border-[#2C2C2A]/60 rounded-[24px] justify-between py-12 px-6 md:px-10 bg-gradient-to-br bg-[#6A9B7B] to-[#4C7A5E] text-white shadow-2xl mb-12">
 
                 {/* Brand column */}
                 <div className="flex-[2] min-w-[260px] my-3 md:mr-8">
