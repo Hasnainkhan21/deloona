@@ -7,7 +7,7 @@ export default function Footer() {
             <div className="text-center py-16 px-5">
                 <h1 className="text-3xl sm:text-5xl font-bold mb-3 text-[#2C2C2A]">READY.SET.DELOONA</h1>
                 <p className="text-lg mb-5 text-[#6B6A66]">Join millions that are already making great Discounts</p>
-                <button className="px-6 py-3 text-base bg-[#8A0C22] text-white rounded-md hover:bg-[#5E0716] transition-colors cursor-pointer shadow-md">
+                <button className="px-6 py-3 text-base font-medium bg-[#F4C542] text-[#141412] rounded-md hover:bg-[#F4C542]/80 transition-colors cursor-pointer shadow-md">
                     Let&apos;s Deloona
                 </button>
             </div>
@@ -23,16 +23,16 @@ export default function Footer() {
                     </p>
                     {/* Social icons from react-icons */}
                     <div className="flex gap-3 mt-6">
-                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#5E0716] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="Facebook">
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#F4C542] hover:text-[#141412] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="Facebook">
                             <FaFacebookF className="text-base" />
                         </a>
-                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#5E0716] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="LinkedIn">
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#F4C542] hover:text-[#141412] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="LinkedIn">
                             <FaLinkedinIn className="text-base" />
                         </a>
-                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#5E0716] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="X (Twitter)">
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#F4C542] hover:text-[#141412] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="X (Twitter)">
                             <FaXTwitter className="text-base" />
                         </a>
-                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#5E0716] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="Instagram">
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#F4C542] hover:text-[#141412] text-white flex items-center justify-center border border-white/15 transition-all duration-200 hover:scale-110 shadow-sm" aria-label="Instagram">
                             <FaInstagram className="text-base" />
                         </a>
                     </div>

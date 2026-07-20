@@ -56,8 +56,8 @@ export default function Hero() {
 
         {/* ── LEFT COLUMN — Content ── */}
         <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-2xl gap-6">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] drop-shadow-md">
-            MAKE EVERY MEAL MORE <span className="text-[#F4C542]">REWARDING</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-[1.1] drop-shadow-md">
+            MAKE EVERY MEAL MORE <span className="text-[#F4C542] font-extrabold">REWARDING</span>
           </h1>
 
           <p className="text-base  sm:text-lg md:text-xl text-white/90 max-w-xl leading-relaxed drop-shadow-sm font-[syne]">
@@ -65,8 +65,8 @@ export default function Hero() {
           </p>
 
           {/* CTA Button */}
-          <button className="bg-[#141412] hover:bg-[#2C2C2A] transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-white shadow-lg cursor-pointer">
-            Get Started
+          <button className="bg-[#F4C542] hover:bg-[#E2B330] transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-[#141412] shadow-lg cursor-pointer">
+            Get Deloona
           </button>
         </div>
 

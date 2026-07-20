@@ -394,7 +394,7 @@ export default function MembershipShowcase() {
       style={{ paddingLeft: "5%", paddingRight: "5%" }}
     >
       <header className="shrink-0 text-center gap-1 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">
-        <p className="font-bold uppercase text-[#8A0C22] mt-20" style={{ fontSize: "12px", letterSpacing: "3px" }}>Dealona Membership</p>
+        <p className="font-bold uppercase text-[#F4C542] mt-20" style={{ fontSize: "16px", letterSpacing: "3px" }}>Dealona Membership</p>
         <h2 className="font-extrabold text-[#2C2C2A] m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
         <p className="text-[#6B6A66] font-[syne] text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>
       </header>

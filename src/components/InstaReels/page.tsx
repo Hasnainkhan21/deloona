@@ -29,7 +29,7 @@ export default function InstaReels() {
             {/* ── Left: Heading ── */}
             <div className="shrink-0 w-full sm:justify-start lg:w-[40%] flex items-center justify-center lg:justify-start">
                 <h2 style={{ fontSize: "36px", fontWeight: 500, lineHeight: 1.15, color: "#2C2C2A" }}>
-                    Follow us on <br /> <span style={{ color: "#8A0C22" }}>Insta</span>
+                    Follow us on <br /> <span style={{ color: "#F4C542" }}>Insta</span>
                 </h2>
             </div>
 
