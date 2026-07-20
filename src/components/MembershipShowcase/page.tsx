@@ -260,6 +260,7 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
 export function PhoneStage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSteps = CARDS.length;
+  const [mounted, setMounted] = useState(false);
 
   const touchStartX = useRef<number | null>(null);
   const isDragging = useRef<boolean>(false);
@@ -309,6 +310,7 @@ export function PhoneStage() {
       setBp(getBreakpoint(vw));
     };
     update();
+    setMounted(true);
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
@@ -319,7 +321,14 @@ export function PhoneStage() {
   return (
     <div
       className="relative flex items-center justify-center w-full mx-auto select-none"
-      style={{ height: stageH, maxWidth: "min(100%, 1400px)", perspective: `${bp.perspective}px`, perspectiveOrigin: "50% 50%" }}
+      style={{
+        height: stageH,
+        maxWidth: "min(100%, 1400px)",
+        perspective: `${bp.perspective}px`,
+        perspectiveOrigin: "50% 50%",
+        opacity: mounted ? 1 : 0,
+        transition: mounted ? "opacity 0.2s ease" : "none",
+      }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onMouseDown={handleMouseDown}
@@ -381,7 +390,7 @@ export function PhoneStage() {
 export default function MembershipShowcase() {
   return (
     <section
-      className="relative w-full min-h-[850px] md:h-[120vh] bg-[#F7F6F4]"
+      className="relative w-full min-h-[850px] md:h-auto md:min-h-[750px] lg:h-[120vh] bg-[#F7F6F4]"
       style={{ paddingLeft: "5%", paddingRight: "5%" }}
     >
       <header className="shrink-0 text-center gap-1 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">

@@ -25,7 +25,7 @@ export default function InstaReels() {
     };
 
     return (
-        <section className="flex flex-col lg:flex-row items-center min-h-[100vh] gap-10 box-border overflow-hidden py-16 lg:py-0 px-4 lg:px-0 bg-[#F7F6F4]">
+        <section className="flex  flex-col lg:flex-row items-center min-h-0 lg:min-h-[100vh] gap-10 box-border overflow-hidden py-16 lg:py-0 px-4 lg:px-0 bg-[#F7F6F4]">
             {/* ── Left: Heading ── */}
             <div className="shrink-0 w-full sm:justify-start lg:w-[40%] flex items-center justify-center lg:justify-start">
                 <h2 style={{ fontSize: "36px", fontWeight: 500, lineHeight: 1.15, color: "#2C2C2A" }}>

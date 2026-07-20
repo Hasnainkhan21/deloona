@@ -54,6 +54,7 @@
 }
 
 @layer base {
+
   html,
   body {
     min-height: 100%;
@@ -126,6 +127,13 @@
   .download-card {
     flex-direction: row;
   }
+}
+
+@media (min-width: 768px) {
+  .download-card {
+    flex-direction: row;
+  }
+
 }
 
 /* Scene */

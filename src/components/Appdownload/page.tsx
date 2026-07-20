@@ -5,13 +5,13 @@ export default function AppDownloadSection() {
 
                 {/* Left Side */}
                 <div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                         Get the app now
                     </h2>
                 </div>
 
                 {/* Right Side */}
-                <div className="bg-white rounded-3xl min-h-80 min-w-60 sm:min-w-72  flex flex-col items-center justify-center gap-6">
+                <div className="bg-white rounded-3xl min-h-80 min-w-68 sm:min-w-88 md:min-w-75  flex flex-col items-center justify-center gap-6">
 
                     {/* QR Code */}
                     <img
