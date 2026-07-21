@@ -17,7 +17,7 @@ export default function Navbar() {
             <circle cx="16.001" cy="27.294" r="4.706" fill="#8A0C22" />
             <circle cx="27.294" cy="16" r="4.706" fill="#D9D9D9" />
           </svg>
-          <span className="font-extrabold text-lg text-white tracking-tight select-none">Deloona</span>
+          <span className="font-extrabold text-lg text-white tracking-tight select-none">Dealona</span>
         </a>
 
         {/* Desktop Links with Vertical Hover Slide */}

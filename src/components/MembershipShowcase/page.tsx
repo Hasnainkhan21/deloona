@@ -201,7 +201,7 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
   card: CardData; offset: number; isActive: boolean; onSelect: () => void; phoneW: number; bp: BreakpointConfig;
 }) {
   const absOffset = Math.abs(offset);
-  const cardW = bp.isMobile ? phoneW * 0.50 : phoneW * 0.68;
+  const cardW = bp.isMobile ? phoneW * 0.50 : phoneW * 0.55;
   const CARD_RATIO = 85.6 / 53.98;
   const cardH = cardW * CARD_RATIO;
   const spread = bp.isMobile ? cardW * 0.65 : cardW * 1.1 * bp.spreadMul;
@@ -380,7 +380,7 @@ export function PhoneStage({ activeIndex, setActiveIndex }: { activeIndex: numbe
           src="/images/mobile.png"
           alt="Deloona Mobile App"
           className="w-full h-auto object-contain drop-shadow-2xl select-none"
-          style={{ transform: bp.isMobile ? "scale(1.4)" : "scale(1.9)" }}
+          style={{ transform: bp.isMobile ? "scale(1.4)" : "scale(1.59)" }}
         />
       </div>
 
