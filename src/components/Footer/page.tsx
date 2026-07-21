@@ -17,7 +17,7 @@ export default function Footer() {
 
                 {/* Brand column */}
                 <div className="flex-[2] min-w-[260px] my-3 md:mr-8">
-                    <h3 className="text-2xl font-extrabold mb-4 text-[#F4C542] tracking-tight">Deloona</h3>
+                    <h3 className="text-2xl font-extrabold mb-4 text-[#F4C542] tracking-tight">Dealona</h3>
                     <p className="text-sm text-[#E8E6E1]/80 leading-relaxed max-w-md">
                         Deloona (Private) Limited is authorised and regulated by the State Bank of Pakistan as an Electronic Money Institution.
                     </p>
