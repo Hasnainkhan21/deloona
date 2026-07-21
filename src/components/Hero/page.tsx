@@ -6,6 +6,7 @@ export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
@@ -21,8 +22,11 @@ export default function Hero() {
     };
     const handleResize = () => {
       const w = window.innerWidth;
+      const h = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
       setIsMobile(w < 640);
       setIsMobileOrTablet(w < 1024);
+      setIsCompactViewport(w >= 768 && h <= 820 && dpr >= 1.45);
     };
     handleResize();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -35,12 +39,14 @@ export default function Hero() {
   }, []);
 
   // Scroll-driven & Hover-driven card animation
-  const maxTranslateX = isMobile ? 50 : 90;
+  const maxTranslateX = isMobile ? 50 : isCompactViewport ? 62 : 90;
   const maxRotate = 8;
 
   const scrollTranslateX = isMobile
     ? Math.min(50, -50 + scrollY * 0.22)
-    : Math.min(120, -110 + scrollY * 0.45) * 1.25;
+    : isCompactViewport
+      ? Math.min(75, -70 + scrollY * 0.32)
+      : Math.min(120, -110 + scrollY * 0.45) * 1.25;
   const scrollRotateDeg = Math.min(8, -12 + scrollY * 0.06);
 
   const activeHover = isHovered && !isMobileOrTablet;
@@ -48,15 +54,31 @@ export default function Hero() {
   const cardRotateDeg = activeHover ? maxRotate : scrollRotateDeg;
 
   const cardTransform = `translate(-50%, -50%) translateX(${cardTranslateX}px) rotate(${cardRotateDeg}deg) translateZ(-30px)`;
+  const heroTitleStyle: React.CSSProperties | undefined = isCompactViewport
+    ? { fontSize: "clamp(2.4rem, 4vw, 3.5rem)" }
+    : undefined;
+  const phoneStageMinHeight = isCompactViewport ? "clamp(430px, 68svh, 620px)" : "clamp(400px, 90vw, 780px)";
+  const phoneStageMaxWidth = isCompactViewport ? "min(50vw, 440px)" : undefined;
+  const phoneImageStyle: React.CSSProperties = {
+    // Reduced scales slightly so it doesn't overflow at 125% zoom
+    transform: isCompactViewport ? "scale(1.56)" : "scale(1.3)",
+    transition: "transform 0.2s ease-in-out",
+    ...(isCompactViewport ? { height: "min(68svh, 650px)", width: "auto", maxWidth: "100%" } : {}),
+  };
+  // Increased card width clamp values to make the card bigger
+  const cardWidth = isCompactViewport ? "clamp(150px, 18vw, 180px)" : "clamp(150px, 28vw, 230px)";
+  // On mobile/tablet, align content to the top (with generous top padding) so the
+  // heading never sits behind the fixed navbar. On desktop keep it vertically centered.
+  const sectionClassName = `relative w-full min-h-[100dvh] flex items-start lg:items-center px-4 sm:px-8 lg:px-16 pb-6 ${isCompactViewport ? "pt-24" : "pt-28 sm:pt-32 lg:pt-16"} select-none overflow-hidden bg-[#4C7A5E]`;
 
   return (
-    <section className="relative w-full md:h-screen flex items-center px-4 sm:px-8 lg:px-16 pb-6 pt-40 md:pt-60 lg:pt-8 select-none overflow-hidden bg-[#4C7A5E]">
+    <section className={sectionClassName}>
       {/* Two-column layout container */}
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:gap-6">
+      <div className="relative z-10 w-full  max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:gap-6">
 
         {/* ── LEFT COLUMN — Content ── */}
-        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-2xl gap-6">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-[1.1] drop-shadow-md">
+        <div className={`flex-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-2xl ${isCompactViewport ? "gap-4" : "gap-6"}`}>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-[1.1] drop-shadow-md" style={heroTitleStyle}>
             MAKE EVERY MEAL MORE <span className="text-[#F4C542] font-extrabold">REWARDING</span>
           </h1>
 
@@ -72,13 +94,14 @@ export default function Hero() {
 
         {/* ── RIGHT COLUMN — Phone + Card ── */}
         <div
-          className="flex-1 flex justify-center lg:justify-end items-center relative w-full mt-4 lg:mt-0"
+          className="flex-1 flex justify-center lg:justify-end items-center relative w-full mt-4 lg:mt-15"
           style={{ perspective: "1200px" }}
         >
           {/* Outer container — phone + card stacked, here you can change size of phone */}
           <div
-            className={`relative flex items-center justify-center w-full max-w-[95vw] sm:max-w-[85vw] md:max-w-[55vw] lg:max-w-[470px] ${isMobileOrTablet ? "" : "cursor-pointer"}`}
-            style={{ minHeight: "clamp(400px, 90vw, 780px)" }}
+            // Removed border-2 and increased lg:max-w to 550px to give the larger elements more room
+            className={`relative flex items-center justify-center w-full max-w-[95vw] sm:max-w-[85vw] md:max-w-[55vw] lg:max-w-[550px] ${isMobileOrTablet ? "" : "cursor-pointer"}`}
+            style={{ minHeight: phoneStageMinHeight, maxWidth: phoneStageMaxWidth }}
             onMouseEnter={() => !isMobileOrTablet && setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -87,7 +110,7 @@ export default function Hero() {
             <div
               className="absolute z-0 shadow-2xl transition-transform duration-700 ease-out flex flex-col justify-between rounded-[20px] p-5 box-border text-white will-change-transform"
               style={{
-                width: "clamp(180px, 24vw, 220px)",
+                width: cardWidth,
                 height: "auto",
                 aspectRatio: "53.98 / 85.6", // Exact physical card ratio (85.6 mm by 53.98 mm)
                 background: "linear-gradient(135deg,#C0102E 0%,#8A0C22 55%,#5E0716 100%)",
@@ -159,7 +182,7 @@ export default function Hero() {
                 src="/images/mobile.png"
                 alt="Deloona Mobile App"
                 className="w-full h-auto object-contain drop-shadow-2xl select-none"
-                style={{ transform: "scale(1.4)", transition: "transform 0.2s ease-in-out" }}
+                style={phoneImageStyle}
               />
             </div>
 

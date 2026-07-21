@@ -178,13 +178,20 @@ interface BreakpointConfig {
   isTablet: boolean;
 }
 
-function getBreakpoint(vw: number): BreakpointConfig {
-  if (vw >= 1440) return { spreadMul: 1.0, rotYMul: 1.0, rotZMul: 1.0, zDepthMul: 1.0, perspective: 1800, isMobile: false, isTablet: false };
-  if (vw >= 1200) return { spreadMul: 0.92, rotYMul: 0.92, rotZMul: 0.92, zDepthMul: 0.92, perspective: 1600, isMobile: false, isTablet: false };
-  if (vw >= 992) return { spreadMul: 0.82, rotYMul: 0.85, rotZMul: 0.85, zDepthMul: 0.85, perspective: 1400, isMobile: false, isTablet: false };
-  if (vw >= 768) return { spreadMul: 0.70, rotYMul: 0.70, rotZMul: 0.70, zDepthMul: 0.70, perspective: 1200, isMobile: false, isTablet: true };
-  if (vw >= 576) return { spreadMul: 0.55, rotYMul: 0.55, rotZMul: 0.55, zDepthMul: 0.50, perspective: 900, isMobile: true, isTablet: false };
-  return { spreadMul: 0.45, rotYMul: 0.40, rotZMul: 0.40, zDepthMul: 0.35, perspective: 700, isMobile: true, isTablet: false };
+function getBreakpoint(vw: number, vh: number, dpr: number): BreakpointConfig {
+  // At high zoom (125%/150%), the CSS viewport shrinks proportionally.
+  // We use a continuous scale factor based on available area so the layout
+  // smoothly adapts instead of jumping at arbitrary px breakpoints.
+  const area = vw * vh;
+  const refArea = 1920 * 1080; // reference: 1080p at 100%
+  const effectiveScale = Math.min(1, Math.max(0.45, area / refArea));
+
+  if (vw < 576) return { spreadMul: 0.45, rotYMul: 0.40, rotZMul: 0.40, zDepthMul: 0.35, perspective: 700, isMobile: true, isTablet: false };
+  if (vw < 768) return { spreadMul: 0.55, rotYMul: 0.55, rotZMul: 0.55, zDepthMul: 0.50, perspective: 900, isMobile: true, isTablet: false };
+  if (vw < 992) return { spreadMul: 0.65 * effectiveScale + 0.15, rotYMul: 0.70, rotZMul: 0.70, zDepthMul: 0.70, perspective: 1200, isMobile: false, isTablet: true };
+  if (vw < 1200) return { spreadMul: 0.75 * effectiveScale + 0.15, rotYMul: 0.85 * effectiveScale + 0.1, rotZMul: 0.85, zDepthMul: 0.85, perspective: 1400, isMobile: false, isTablet: false };
+  if (vw < 1440) return { spreadMul: 0.85 * effectiveScale + 0.1, rotYMul: 0.92 * effectiveScale + 0.05, rotZMul: 0.92, zDepthMul: 0.92, perspective: 1600, isMobile: false, isTablet: false };
+  return { spreadMul: effectiveScale, rotYMul: effectiveScale, rotZMul: 1.0, zDepthMul: effectiveScale, perspective: 1800, isMobile: false, isTablet: false };
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -194,10 +201,10 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
   card: CardData; offset: number; isActive: boolean; onSelect: () => void; phoneW: number; bp: BreakpointConfig;
 }) {
   const absOffset = Math.abs(offset);
-  const cardW = bp.isMobile ? phoneW * 0.50 : phoneW * 0.38;
-  const CARD_RATIO = 85.6 / 53.98; // Exact physical card ratio (85.6 mm by 53.98 mm)
+  const cardW = bp.isMobile ? phoneW * 0.50 : phoneW * 0.68;
+  const CARD_RATIO = 85.6 / 53.98;
   const cardH = cardW * CARD_RATIO;
-  const spread = bp.isMobile ? cardW * 0.65 : cardW * 1 * bp.spreadMul;
+  const spread = bp.isMobile ? cardW * 0.65 : cardW * 1.1 * bp.spreadMul;
   const translateX = offset * spread;
   const baseZ = phoneW * 0.12;
   const translateZ = isActive ? 2 : -absOffset * baseZ * 0.5 * bp.zDepthMul;
@@ -211,7 +218,7 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
       onClick={onSelect}
       style={{
         position: "absolute", left: "50%", top: "50%",
-        width: cardW, height: cardH, aspectRatio: "53.98 / 85.6", marginLeft: -cardW / 2, marginTop: -cardH / 2,
+        width: cardW, height: cardH, marginLeft: -cardW / 2, marginTop: -cardH / 2,
         cursor: isActive ? "default" : "pointer",
         transition: bp.isMobile ? "transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease" : "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
         transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
@@ -257,8 +264,7 @@ function MemberCard({ card, offset, isActive, onSelect, phoneW, bp }: {
    PHONE STAGE  — exported so Hero can embed just the phone+cards
    without any wrapping <section> or background.
 ───────────────────────────────────────────────────────────────── */
-export function PhoneStage() {
-  const [activeIndex, setActiveIndex] = useState(0);
+export function PhoneStage({ activeIndex, setActiveIndex }: { activeIndex: number; setActiveIndex: React.Dispatch<React.SetStateAction<number>> }) {
   const totalSteps = CARDS.length;
   const [mounted, setMounted] = useState(false);
 
@@ -297,17 +303,30 @@ export function PhoneStage() {
 
   const activeCard = CARDS[activeIndex];
   const [phoneW, setPhoneW] = useState(300);
-  const [bp, setBp] = useState<BreakpointConfig>(() => getBreakpoint(1200));
+  const [viewportH, setViewportH] = useState(900);
+  const [bp, setBp] = useState<BreakpointConfig>(() => getBreakpoint(1200, 900, 1));
 
   useEffect(() => {
     const update = () => {
       const vw = window.innerWidth;
-      // Increased from vw*0.55 to vw*0.75 and raised minimum from 480 to 650 so phone is immediately much larger!
-      const w = vw < 640
-        ? Math.max(360, Math.min(vw * 0.95, 500))
-        : Math.max(650, Math.min(vw * 0.75, 700));
+      const vh = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+
+      // Dynamic phone width: scales with viewport but adapts to zoom
+      let w: number;
+      if (vw < 640) {
+        // Mobile: fill most of the width
+        w = Math.max(300, Math.min(vw * 0.88, 480));
+      } else {
+        // Desktop/tablet: use vh to also constrain so it fits vertically
+        const wBased = vw * 0.42;
+        const hBased = vh * 0.55;
+        w = Math.max(320, Math.min(wBased, hBased, 700));
+      }
+
       setPhoneW(w);
-      setBp(getBreakpoint(vw));
+      setViewportH(vh);
+      setBp(getBreakpoint(vw, vh, dpr));
     };
     update();
     setMounted(true);
@@ -315,8 +334,15 @@ export function PhoneStage() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const phoneH = phoneW * 2;
-  const stageH = Math.max(450, phoneH * (bp.isMobile ? 0.82 : 0.85));
+  // Stage height: hug the actual rendered phone so there's no dead space above/below.
+  // The phone image box is `phoneW` wide with a natural ~2:1 aspect, then visually scaled.
+  // We size the stage to that visual height (width * 2 * scale) so it fits snugly.
+  const mobileScale = 1.3;
+  const desktopScale = 1.9;
+  const stageH = bp.isMobile
+    ? Math.max(360, phoneW * 2 * mobileScale * 0.5)
+    : Math.max(500, Math.min(phoneW * 2 * desktopScale * 0.55, viewportH * 0.85));
+
 
   return (
     <div
@@ -354,7 +380,7 @@ export function PhoneStage() {
           src="/images/mobile.png"
           alt="Deloona Mobile App"
           className="w-full h-auto object-contain drop-shadow-2xl select-none"
-          style={{ transform: bp.isMobile ? "scale(1.4)" : "scale(1.1)" }}
+          style={{ transform: bp.isMobile ? "scale(1.4)" : "scale(1.9)" }}
         />
       </div>
 
@@ -363,42 +389,64 @@ export function PhoneStage() {
         <MemberCard key={card.id} card={card} offset={i - activeIndex} isActive={i === activeIndex} onSelect={() => setActiveIndex(i)} phoneW={phoneW} bp={bp} />
       ))}
 
-      {/* Indicator dots */}
-      <div className="absolute bottom-8 sm:bottom-60 left-0 right-0 flex justify-center gap-[7px] z-[15]">
-        {CARDS.map((c, i) => (
-          <span
-            key={c.id}
-            onClick={() => setActiveIndex(i)}
-            className="block rounded-full cursor-pointer"
-            style={{
-              width: i === activeIndex ? (bp.isMobile ? 20 : "clamp(18px, 1.8vw, 30px)") : (bp.isMobile ? 7 : "clamp(6px, 0.55vw, 8px)"),
-              height: bp.isMobile ? 7 : "clamp(6px, 0.55vw, 8px)",
-              background: i === activeIndex ? (c.id === "mini" ? "#111827" : c.accentColor) : "rgba(0,0,0,0.15)",
-              transition: "width 0.35s ease, background 0.35s ease",
-            }}
-          />
-        ))}
-      </div>
-
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────────────
    MEMBERSHIP SHOWCASE  — full standalone page section
+   Uses flexbox column layout so header + stage always fit within
+   the viewport regardless of zoom level.
 ───────────────────────────────────────────────────────────────── */
 export default function MembershipShowcase() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
     <section
-      className="relative w-full min-h-[850px] md:h-auto md:min-h-[750px] lg:h-[120vh] bg-[#F7F6F4]"
-      style={{ paddingLeft: "5%", paddingRight: "5%" }}
+      className="relative w-full flex flex-col items-center bg-[#F7F6F4] overflow-hidden lg:min-h-screen"
+      style={{
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        paddingBottom: isMobile ? "64px" : "clamp(1.5rem, 3vh, 4rem)",
+      }}
     >
-      <header className="shrink-0 text-center gap-1 flex flex-col items-center justify-center relative z-[5] w-full sm:-mb-50">
-        <p className="font-bold uppercase text-[#F4C542] mt-20" style={{ fontSize: "16px", letterSpacing: "3px" }}>Dealona Membership</p>
+      {/* Header */}
+      <header className="shrink-0 text-center flex flex-col items-center justify-center relative z-[5] w-full pt-16 pb-2 md:pt-20 md:pb-6">
+        <p className="font-bold uppercase text-[#F4C542] m-0 mb-1" style={{ fontSize: "clamp(12px, 1.1vw, 16px)", letterSpacing: "3px" }}>Dealona Membership</p>
         <h2 className="font-extrabold text-[#2C2C2A] m-0 text-2xl md:text-4xl">Choose Your Tier</h2>
-        <p className="text-[#6B6A66] font-[syne] text-sm md:text-base max-w-lg m-0">Swipe or drag the cards below to explore each membership level.</p>
+        <p className="text-[#6B6A66] font-[syne] text-sm md:text-base max-w-lg m-0 mt-2 mb-4 md:mb-10">Swipe or drag the cards below to explore each membership level.</p>
       </header>
-      <PhoneStage />
+
+      {/* Stage: sized to hug the phone; on desktop it grows to fill remaining space */}
+      <div className="w-full flex items-center justify-center min-h-0 lg:flex-1">
+        <PhoneStage activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      </div>
+
+      {/* Indicator dots — placed in normal flow below the stage so they're always visible */}
+      <div className="shrink-0 flex justify-center gap-[7px] pt-2 pb-4 md:py-6 relative z-[15]">
+
+        {CARDS.map((c, i) => (
+          <span
+            key={c.id}
+            onClick={() => setActiveIndex(i)}
+            className="block rounded-full cursor-pointer"
+            style={{
+              width: i === activeIndex ? (isMobile ? 20 : "clamp(18px, 1.8vw, 30px)") : (isMobile ? 7 : "clamp(6px, 0.55vw, 8px)"),
+              height: isMobile ? 7 : "clamp(6px, 0.55vw, 8px)",
+              background: i === activeIndex ? (c.id === "mini" ? "#111827" : c.accentColor) : "rgba(0,0,0,0.15)",
+              transition: "width 0.35s ease, background 0.35s ease",
+            }}
+          />
+        ))}
+      </div>
     </section>
   );
 }
