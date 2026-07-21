@@ -401,10 +401,12 @@ export function PhoneStage({ activeIndex, setActiveIndex }: { activeIndex: numbe
 export default function MembershipShowcase() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 640);
     check();
+    setMounted(true);
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
@@ -416,6 +418,8 @@ export default function MembershipShowcase() {
         paddingLeft: "5%",
         paddingRight: "5%",
         paddingBottom: isMobile ? "64px" : "clamp(1.5rem, 3vh, 4rem)",
+        opacity: mounted ? 1 : 0,
+        transition: mounted ? "opacity 0.2s ease-in" : "none",
       }}
     >
       {/* Header */}

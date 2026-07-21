@@ -8,6 +8,7 @@ export default function Hero() {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const [isCompactViewport, setIsCompactViewport] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     let ticking = false;
@@ -32,6 +33,7 @@ export default function Hero() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     handleScroll();
+    setMounted(true);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
@@ -57,11 +59,11 @@ export default function Hero() {
   const heroTitleStyle: React.CSSProperties | undefined = isCompactViewport
     ? { fontSize: "clamp(2.4rem, 4vw, 3.5rem)" }
     : undefined;
-  const phoneStageMinHeight = isCompactViewport ? "clamp(430px, 68svh, 620px)" : "clamp(400px, 90vw, 780px)";
+  const phoneStageMinHeight = isCompactViewport ? "clamp(430px, 68svh, 620px)" : "clamp(400px, 90vw, 720px)";
   const phoneStageMaxWidth = isCompactViewport ? "min(50vw, 440px)" : undefined;
   const phoneImageStyle: React.CSSProperties = {
     // Reduced scales slightly so it doesn't overflow at 125% zoom
-    transform: isCompactViewport ? "scale(1.56)" : "scale(1.3)",
+    transform: isCompactViewport ? "scale(1.59)" : "scale(1.18)",
     transition: "transform 0.2s ease-in-out",
     ...(isCompactViewport ? { height: "min(68svh, 650px)", width: "auto", maxWidth: "100%" } : {}),
   };
@@ -69,10 +71,13 @@ export default function Hero() {
   const cardWidth = isCompactViewport ? "clamp(150px, 18vw, 180px)" : "clamp(150px, 28vw, 230px)";
   // On mobile/tablet, align content to the top (with generous top padding) so the
   // heading never sits behind the fixed navbar. On desktop keep it vertically centered.
-  const sectionClassName = `relative w-full min-h-[100dvh] flex items-start lg:items-center px-4 sm:px-8 lg:px-16 pb-6 ${isCompactViewport ? "pt-24" : "pt-28 sm:pt-32 lg:pt-16"} select-none overflow-hidden bg-[#4C7A5E]`;
+  const sectionClassName = `relative w-full min-h-[100dvh] flex items-start lg:items-center px-4 sm:px-8 lg:px-16 pb-6 ${isCompactViewport ? "pt-24" : "pt-28 sm:pt-32 lg:pt-0"} select-none overflow-hidden bg-[#4C7A5E]`;
 
   return (
-    <section className={sectionClassName}>
+    <section 
+      className={sectionClassName}
+      style={{ opacity: mounted ? 1 : 0, transition: mounted ? "opacity 0.2s ease-in" : "none" }}
+    >
       {/* Two-column layout container */}
       <div className="relative z-10 w-full  max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:gap-6">
 
