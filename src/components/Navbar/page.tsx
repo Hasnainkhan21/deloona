@@ -7,7 +7,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 w-full pointer-events-none">
-      <nav className="pointer-events-auto flex items-center border mx-4 max-md:w-full max-md:justify-between border-[#3A3A3A] px-6 py-3.5 rounded-full text-white text-sm bg-[#141412]/90 backdrop-blur-md shadow-2xl transition-all duration-300">
+      <nav className="pointer-events-auto flex items-center border mx-4 max-md:w-full max-md:justify-between border-[#3A3A3A] px-6 py-3.5 rounded-full text-white text-sm bg-[#141412]/50 backdrop-blur-[2px] shadow-2xl transition-all duration-300">
 
         {/* Logo with 4 circles SVG */}
         <a href="#" className="flex items-center gap-2.5 no-underline">
@@ -17,7 +17,7 @@ export default function Navbar() {
             <circle cx="16.001" cy="27.294" r="4.706" fill="#8A0C22" />
             <circle cx="27.294" cy="16" r="4.706" fill="#D9D9D9" />
           </svg>
-          <span className="font-extrabold text-lg text-white tracking-tight select-none">Dealona</span>
+          <span className="font-extrabold pb-1 text-lg text-white tracking-tight select-none">Dealona</span>
         </a>
 
         {/* Desktop Links with Vertical Hover Slide */}
@@ -45,7 +45,7 @@ export default function Navbar() {
           <button className="border border-[#6B6A66] hover:bg-[#3A3A3A] px-4 py-2 rounded-full text-sm font-medium transition cursor-pointer">
             Contact
           </button>
-          <button className="bg-[#F4C542] hover:shadow-[#F4C542]/50 shadow-[#F4C542]/50 text-[#141412] px-4 py-2 rounded-full text-sm font-bold hover:bg-[#E2B330] transition duration-300 cursor-pointer">
+          <button className="bg-[#ffcc29] hover:shadow-[#F4C542]/50 shadow-[#F4C542]/50 text-[#141412] px-4 py-2 rounded-full text-sm font-bold hover:bg-[#E2B330] transition duration-300 cursor-pointer">
             Get Started
           </button>
         </div>

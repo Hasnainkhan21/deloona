@@ -1,5 +1,120 @@
 @import "tailwindcss";
 
+
+
+/* Thin: 100 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Thin/Gotham Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Thin Italic/Gotham Thin Italic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Extra Light: 200 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Extra Light/Gotham Extra Light.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Extra Light Italic/Gotham Extra Light Italic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Light: 300 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Light/Gotham Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Book: 350 (mapped to 350 for fine-grained control) */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Book/Gotham Book.otf') format('opentype');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Regular: 400 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Regular/Gotham Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Italic/Gotham Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Medium: 500 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Medium/Gotham Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold: 700 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Bold/Gotham Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham ItalicBold/Gotham ItalicBold.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Black: 800 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Black/Gotham Black.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ultra: 900 */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham Ultra/Gotham Ultra.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #F7F6F4;
   /* ink-50 — Deloona app background */
@@ -76,6 +191,10 @@
   }
 }
 
+.font-gotham {
+  font-family: 'Gotham', Arial, Helvetica, sans-serif;
+}
+
 /* Hide scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -111,7 +230,7 @@
 
 .download-card {
   width: 100%;
-  background-color: #4C7A5E;
+  background-color: #005551;
   border-radius: 26px;
   padding: 48px 50px;
   min-height: 300px;

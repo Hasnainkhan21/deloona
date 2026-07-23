@@ -54,14 +54,14 @@ const CARDS: CardData[] = [
     badgeBg: "rgba(255,255,255,0.16)",
     badgeBorder: "0.5px solid rgba(255,255,255,0.30)",
     badgeColor: "#fff",
-    gradient: "linear-gradient(135deg,#C0102E 0%,#8A0C22 55%,#5E0716 100%)",
+    gradient: "linear-gradient(135deg, #1E9D92 0%, #00806F 35%, #005551 100%)",
     textColor: "#fff",
     subTextColor: "rgba(255,255,255,0.60)",
     validFor: "6d 04h",
     cardNo: "DLN-8842",
     tagline: "Built for regulars",
     description: "Unlock 3 curated partner slots over 6 days.",
-    accentColor: "#C0102E",
+    accentColor: "linear-gradient(135deg, #1E9D92 0%, #00806F 35%, #005551 100%)",
     renderOverlay: () => (
       <div
         className="absolute -top-10 -right-8 w-[180px] h-[180px] rounded-full"
@@ -95,14 +95,14 @@ const CARDS: CardData[] = [
     badgeBg: "rgba(255,255,255,0.16)",
     badgeBorder: "0.5px solid rgba(255,255,255,0.30)",
     badgeColor: "#fff",
-    gradient: "linear-gradient(135deg,#8A0C22 0%,#5E0716 55%,#3A040D 100%)",
+    gradient: "linear-gradient(135deg, #0A6B64 0%, #004541 45%, #001F1E 100%)",
     textColor: "#fff",
     subTextColor: "rgba(255,255,255,0.60)",
     validFor: "13d 02h",
     cardNo: "DLN-8842",
     tagline: "For the power user",
     description: "Access up to 10 partner slots over 13 days.",
-    accentColor: "#8A0C22",
+    accentColor: "linear-gradient(135deg, #0A6B64 0%, #004541 45%, #001F1E 100%)",
     renderOverlay: () => (
       <div
         className="absolute -top-10 -right-8 w-[180px] h-[180px] rounded-full"

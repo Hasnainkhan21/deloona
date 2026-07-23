@@ -71,7 +71,7 @@ export default function Hero() {
   const cardWidth = isCompactViewport ? "clamp(150px, 18vw, 180px)" : "clamp(150px, 28vw, 230px)";
   // On mobile/tablet, align content to the top (with generous top padding) so the
   // heading never sits behind the fixed navbar. On desktop keep it vertically centered.
-  const sectionClassName = `relative w-full min-h-[100dvh] flex items-start lg:items-center px-4 sm:px-8 lg:px-16 pb-6 ${isCompactViewport ? "pt-24" : "pt-28 sm:pt-32 lg:pt-0"} select-none overflow-hidden bg-[#4C7A5E]`;
+  const sectionClassName = `relative w-full min-h-[100dvh] flex items-start lg:items-center px-4 sm:px-8 lg:px-16 pb-6 ${isCompactViewport ? "pt-24" : "pt-28 sm:pt-32 lg:pt-0"} select-none overflow-hidden bg-[#005551]`;
 
   return (
     <section 
@@ -83,16 +83,16 @@ export default function Hero() {
 
         {/* ── LEFT COLUMN — Content ── */}
         <div className={`flex-1 flex flex-col items-center lg:items-start text-center lg:text-left w-full max-w-2xl ${isCompactViewport ? "gap-4" : "gap-6"}`}>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-[1.1] drop-shadow-md" style={heroTitleStyle}>
-            MAKE EVERY MEAL MORE <span className="text-[#F4C542] font-extrabold">REWARDING</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-gotham font-[350] text-white leading-[1.1] drop-shadow-md" style={heroTitleStyle}>
+            MAKE EVERY MEAL MORE <span className="text-[#ffcc29] font-extrabold tracking-wide">REWARDING</span>
           </h1>
 
-          <p className="text-base  sm:text-lg md:text-xl text-white/90 max-w-xl leading-relaxed drop-shadow-sm font-[syne]">
+          <p className="text-base  sm:text-lg md:text-xl text-white/90 max-w-xl leading-relaxed drop-shadow-sm font-gotham font-[300]">
             From quick lunches to family dinners and weekend outings, discover exclusive restaurant deals, save on every meal, and enjoy great food for less.
           </p>
 
           {/* CTA Button */}
-          <button className="bg-[#F4C542] hover:bg-[#E2B330] transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-[#141412] shadow-lg cursor-pointer">
+          <button className="bg-[#ffcc29] hover:bg-[#E2B330] transition-colors w-[150px] rounded-[10px] h-[50px] font-semibold text-[#141412] shadow-lg cursor-pointer">
             Get Deloona
           </button>
         </div>
@@ -118,7 +118,7 @@ export default function Hero() {
                 width: cardWidth,
                 height: "auto",
                 aspectRatio: "53.98 / 85.6", // Exact physical card ratio (85.6 mm by 53.98 mm)
-                background: "linear-gradient(135deg,#C0102E 0%,#8A0C22 55%,#5E0716 100%)",
+                background: "linear-gradient(135deg, #0A6B64 0%, #004541 45%, #001F1E 100%)",
                 boxShadow: "0 25px 60px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(255,255,255,0.22) inset",
                 top: "50%",
                 left: "50%",
@@ -166,7 +166,6 @@ export default function Hero() {
                         />
                       ))}
                     </div>
-                    <p className="text-[9px] text-white/85 m-0">1 of 3 partners</p>
                   </div>
                 </div>
 

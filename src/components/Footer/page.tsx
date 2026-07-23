@@ -7,17 +7,17 @@ export default function Footer() {
             <div className="text-center py-16 px-5">
                 <h1 className="text-3xl sm:text-5xl font-bold mb-3 text-[#2C2C2A]">READY.SET.DELOONA</h1>
                 <p className="text-lg mb-5 text-[#6B6A66]">Join millions that are already making great Discounts</p>
-                <button className="px-6 py-3 text-base font-medium bg-[#F4C542] text-[#141412] rounded-md hover:bg-[#F4C542]/80 transition-colors cursor-pointer shadow-md">
+                <button className="px-6 py-3 text-base font-medium bg-[#ffcc29] text-[#141412] rounded-md hover:bg-[#F4C542]/80 transition-colors cursor-pointer shadow-md">
                     Let&apos;s Deloona
                 </button>
             </div>
 
             {/* Footer links panel */}
-            <div className="flex flex-wrap border border-[#2C2C2A]/60 rounded-[24px] justify-between py-12 px-6 md:px-10 bg-gradient-to-br bg-[#6A9B7B] to-[#4C7A5E] text-white shadow-2xl mb-12">
+            <div className="flex flex-wrap border border-[#2C2C2A]/60 rounded-[24px] justify-between py-12 px-6 md:px-10 bg-gradient-to-br bg-[#005551] to-[#4C7A5E] text-white shadow-2xl mb-12">
 
                 {/* Brand column */}
                 <div className="flex-[2] min-w-[260px] my-3 md:mr-8">
-                    <h3 className="text-2xl font-extrabold mb-4 text-[#F4C542] tracking-tight">Dealona</h3>
+                    <h3 className="text-2xl font-extrabold mb-4 text-[#ffcc29] tracking-tight">Dealona</h3>
                     <p className="text-sm text-[#E8E6E1]/80 leading-relaxed max-w-md">
                         Deloona (Private) Limited is authorised and regulated by the State Bank of Pakistan as an Electronic Money Institution.
                     </p>
